@@ -1,4 +1,5 @@
 import React from 'react';
+import './InvoiceItem.css';
 
 type InvoiceItemProps = {
   name: string;
@@ -7,7 +8,7 @@ type InvoiceItemProps = {
 
 const InvoiceItem: React.FC<InvoiceItemProps> = ({ name, amount }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+    <div className="invoice-item">
       <span>{name}</span>
       <span>{amount.toLocaleString()}円</span>
     </div>
@@ -15,5 +16,3 @@ const InvoiceItem: React.FC<InvoiceItemProps> = ({ name, amount }) => {
 };
 
 export default InvoiceItem;
-
-
