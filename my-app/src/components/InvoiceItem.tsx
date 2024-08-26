@@ -1,17 +1,18 @@
+// components/InvoiceItem.tsx
+
 import React from 'react';
-import './InvoiceItem.css';
+import { InvoiceItem as InvoiceItemType } from '../models/InvoiceModel';
 
 type InvoiceItemProps = {
-  name: string;
-  amount: number;
+  item: InvoiceItemType;
 };
 
-const InvoiceItem: React.FC<InvoiceItemProps> = ({ name, amount }) => {
+const InvoiceItem: React.FC<InvoiceItemProps> = ({ item }) => {
   return (
-    <div className="invoice-item">
-      <span>{name}</span>
-      <span>{amount.toLocaleString()}円</span>
-    </div>
+    <tr>
+      <td style={{ textAlign: 'left' }}>{item.description}</td>
+      <td>{item.amount.toLocaleString()}円</td>
+    </tr>
   );
 };
 
