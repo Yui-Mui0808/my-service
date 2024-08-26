@@ -1,27 +1,36 @@
+// models/InvoiceModel.ts
+
 export type InvoiceItem = {
-  name: string;
+  description: string;
   amount: number;
 };
 
-export type Invoice = {
-  issuerCompanyName: string;        // 請求元の会社名
-  issuerRegistrationNumber: string; // 請求元の登録番号
-  recipientCompanyName: string;     // 請求先の会社名
-  recipientRegistrationNumber: string; // 請求先の登録番号
-  invoiceItems: InvoiceItem[];      // 請求項目のリスト
-  taxRate: number;  // 消費税率 (例: 0.10 は 10%)
+export type InvoiceData = {
+  from: {
+    companyName: string;
+    registrationNumber: string;
+  };
+  to: {
+    companyName: string;
+    registrationNumber: string;
+  };
+  items: InvoiceItem[];
+  taxRate: number;
 };
 
-export const dummyInvoice: Invoice = {
-  issuerCompanyName: '株式会社 鬼殺隊',
-  issuerRegistrationNumber: 'T1234567890123',
-  recipientCompanyName: '株式会社 藤屋敷',
-  recipientRegistrationNumber: 'T9876543210123',
-  invoiceItems: [
-    { name: '任務により隊士の移動にかかった交通費', amount: 250000 },
-    { name: '刀の修理費・隊服の修繕費', amount: 3000000 },
+// サンプルデータを定義
+export const sampleInvoiceData: InvoiceData = {
+  from: {
+    companyName: "株式会社 鬼殺隊",
+    registrationNumber: "T1234567890123",
+  },
+  to: {
+    companyName: "株式会社 藤屋敷",
+    registrationNumber: "T9876543210123",
+  },
+  items: [
+    { description: "任務による隊士の移動にかかった交通費", amount: 250000 },
+    { description: "刀の修理費・隊服の修繕費", amount: 3000000 },
   ],
-  taxRate: 0.10,  // 10% の消費税
+  taxRate: 0.1,
 };
-
-
