@@ -44,6 +44,12 @@
   border: 1px solid #ddd;
 }
 
+/* この部分を修正しました */
+.invoice-header h2,
+.invoice-section h2 {
+  font-size: 18px; /* フォントサイズを18pxに変更しました */
+}
+
 @media screen and (max-width: 768px) {
   .invoice-container {
     padding: 10px;
@@ -55,11 +61,11 @@
   }
 
   .invoice-header h2 {
-    font-size: 18px;
+    font-size: 18px; /* ここも同様に18pxに変更 */
   }
 
   .invoice-table th, .invoice-table td {
-    font-size: 16px;
+    font-size: 18px;
     padding: 8px;
   }
 }
