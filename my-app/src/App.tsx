@@ -1,16 +1,16 @@
 // App.tsx
-
 import React from 'react';
-import Invoice from './components/Invoice';
-import { sampleInvoiceData } from './models/InvoiceModel';
-import './App.css';
+import InvoiceList from './components/InvoiceList';
+import './styles.css';  // CSSをインポート
 
 const App: React.FC = () => {
-  return (
-    <div>
-      <Invoice data={sampleInvoiceData} />
-    </div>
-  );
+    return (
+        <div className="app">
+            <h1>請求書表示サービス</h1>
+            <InvoiceList />
+        </div>
+    );
 };
 
 export default App;
+
