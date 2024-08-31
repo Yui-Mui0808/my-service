@@ -1,31 +1,29 @@
-// InvoiceList.tsx
-import React, { useState } from 'react';
-import { Invoice } from '../models/Invoice'; // Invoice型をインポート
-import { invoices } from '../data/invoices';
-import InvoiceComponent from './Invoice';
+import React, { useContext } from 'react';
+import { InvoiceContext } from '../InvoiceContext';
+import './InvoiceList.css';  // CSSファイルをインポート
 
 const InvoiceList: React.FC = () => {
-    const [selectedInvoice, setSelectedInvoice] = useState<string>(invoices[0].invoiceNumber);
+  const context = useContext(InvoiceContext);
+  if (!context) throw new Error('InvoiceList must be used within an InvoiceProvider');
 
-    const handleInvoiceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedInvoice(event.target.value);
-    };
+  const { invoices, selectInvoice } = context;
 
-    const selected: Invoice | undefined = invoices.find(invoice => invoice.invoiceNumber === selectedInvoice);
-
-    return (
-        <div className="invoice-list">
-            <select onChange={handleInvoiceChange} value={selectedInvoice}>
-                {invoices.map(invoice => (
-                    <option key={invoice.invoiceNumber} value={invoice.invoiceNumber}>
-                        {invoice.companyName} ({invoice.invoiceNumber})
-                    </option>
-                ))}
-            </select>
-
-            {selected && <InvoiceComponent invoice={selected} />}
-        </div>
-    );
+  return (
+    <div>
+      <h2 className="invoice-list-title">請求書リスト</h2>
+      <ul className="invoice-list">
+        {invoices.map((invoice, index) => (
+          <li 
+            key={index} 
+            className="invoice-list-item"
+            onClick={() => selectInvoice(index)}
+          >
+            {invoice.companyName}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default InvoiceList;
