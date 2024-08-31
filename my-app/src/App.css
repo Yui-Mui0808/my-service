@@ -1,71 +1,25 @@
-/* 既存のスタイル */
-.invoice-container {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  max-width: 800px;
-  margin: auto;
-  background-color: #ffffff;
-}
-
-.invoice-title {
-  font-size: 28px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.invoice-header {
+.app-container {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding: 20px;
 }
 
-.invoice-section {
+.app-title {
+  font-size: 2.5rem;
   margin-bottom: 20px;
+  color: #333;
+  text-align: center;
 }
 
-.invoice-table {
+.invoice-content {
   width: 100%;
-  border-collapse: collapse;
-}
-
-.invoice-table th {
-  text-align: left;
-  background-color: #e6f2ff;
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-.invoice-table td {
-  text-align: right;
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-/* この部分を修正しました */
-.invoice-header h2,
-.invoice-section h2 {
-  font-size: 18px; /* フォントサイズを18pxに変更しました */
-}
-
-@media screen and (max-width: 768px) {
-  .invoice-container {
-    padding: 10px;
-    max-width: 100%;
-  }
-
-  .invoice-header {
-    display: block;
-  }
-
-  .invoice-header h2 {
-    font-size: 18px; /* ここも同様に18pxに変更 */
-  }
-
-  .invoice-table th, .invoice-table td {
-    font-size: 18px;
-    padding: 8px;
-  }
+  max-width: 800px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
 }
