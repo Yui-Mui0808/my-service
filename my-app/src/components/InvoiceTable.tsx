@@ -1,5 +1,5 @@
-// components/InvoiceTable.tsx
 import React from 'react';
+import './InvoiceTable.css'; // スタイルをインポート
 import { InvoiceItem } from '../models/Invoice';
 
 interface InvoiceTableProps {
@@ -23,23 +23,23 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ items, subtotal, taxTotal, 
                 <tbody>
                     {items.map((item, index) => (
                         <tr key={index}>
-                            <td className="item-name">{item.name}</td>   {/* 項目名セル */}
-                            <td className="item-amount">{item.amount.toLocaleString()}円</td> {/* 金額セル */}
+                            <td className="item-name">{item.name}</td>
+                            <td className="item-amount">{item.amount.toLocaleString()}円</td> {/* コンマ追加済み */}
                         </tr>
                     ))}
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td className="item-name">小計:</td>
-                        <td className="item-amount">{subtotal.toLocaleString()}円</td>
+                        <td>小計</td>
+                        <td>{subtotal.toLocaleString()}円</td>
                     </tr>
                     <tr>
-                        <td className="item-name">消費税 (10.0%):</td>
-                        <td className="item-amount">{taxTotal.toLocaleString()}円</td>
+                        <td>税金</td>
+                        <td>{taxTotal.toLocaleString()}円</td>
                     </tr>
                     <tr>
-                        <td className="item-name">合計金額:</td>
-                        <td className="item-amount">{totalAmount.toLocaleString()}円</td>
+                        <td>合計</td>
+                        <td>{totalAmount.toLocaleString()}円</td>
                     </tr>
                 </tfoot>
             </table>
@@ -48,4 +48,3 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ items, subtotal, taxTotal, 
 };
 
 export default InvoiceTable;
-

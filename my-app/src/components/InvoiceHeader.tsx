@@ -1,5 +1,6 @@
 // components/InvoiceHeader.tsx
 import React from 'react';
+import './InvoiceHeader.css';
 
 interface InvoiceHeaderProps {
     companyName: string;

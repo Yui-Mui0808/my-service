@@ -1,19 +1,19 @@
 // src/InvoiceContext.tsx
 import React, { createContext, useState, ReactNode } from 'react';
-import { InvoiceModel } from './models/InvoiceModel';
-import { invoices as defaultInvoices } from './data/invoiceData';
+import { Invoice } from '../models/InvoiceModel';
+import { invoices as defaultInvoices } from '../data';
 
 interface InvoiceContextProps {
-  invoices: InvoiceModel[];
-  selectedInvoice: InvoiceModel | null;
+  invoices: Invoice[];
+  selectedInvoice: Invoice | null;
   selectInvoice: (index: number) => void;
 }
 
 export const InvoiceContext = createContext<InvoiceContextProps | undefined>(undefined);
 
 export const InvoiceProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [invoices] = useState<InvoiceModel[]>(defaultInvoices);
-  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceModel | null>(null);
+  const [invoices] = useState<Invoice[]>(defaultInvoices);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
 
   const selectInvoice = (index: number) => {
     setSelectedInvoice(invoices[index]);

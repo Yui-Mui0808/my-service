@@ -1,25 +1,19 @@
-.invoice-list-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
-  .invoice-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .invoice-list-item {
-    padding: 10px;
-    margin-bottom: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .invoice-list-item:hover {
-    background-color: #e0e0e0;
-  }
-  
+.invoice-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.invoice-list li {
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.invoice-list li:hover {
+  background-color: #f1f1f1;
+}
