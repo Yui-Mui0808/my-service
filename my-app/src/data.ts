@@ -1,5 +1,5 @@
 // src/data.ts
-import { Invoice, InvoiceItem } from './InvoiceModel';
+import { Invoice, InvoiceItem } from './models/InvoiceModel';
 
 export const invoices: Invoice[] = [
   new Invoice('株式会社 鬼殺隊', 'T1234567890123', [

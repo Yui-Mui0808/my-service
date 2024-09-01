@@ -1,5 +1,6 @@
 // components/Invoice.tsx
 import React from 'react';
+import './Invoice.css';
 import { Invoice } from '../models/Invoice';
 import InvoiceHeader from './InvoiceHeader';
 import InvoiceTable from './InvoiceTable';

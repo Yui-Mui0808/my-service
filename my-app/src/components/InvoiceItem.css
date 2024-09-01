@@ -1,14 +1,17 @@
 .invoice-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-  
-  .invoice-item span {
-    font-size: 16px;
-  }
-  
-  .invoice-item:last-child {
-    margin-bottom: 0;
-  }
-  
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; /* リスト項目の垂直位置を整える */
+  margin: 0; /* 不要な余白を削除 */
+  padding-left: 0; /* 左側のスペースを削除 */
+}
+
+.invoice-item li {
+  list-style-position: inside; /* リストマーカーをテキストに近づける */
+}
+
+.invoice-item span {
+  margin: 0; /* 追加の余白を削除 */
+  padding: 0; /* 追加の余白を削除 */
+  text-align: left; /* 文字列を左揃えにする */
+}
