@@ -1,19 +1,145 @@
+/* テーブル全体のスタイル */
 .invoice-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: left; /* テーブル全体を左揃えにする */
 }
 
-.invoice-list li {
+.invoice-list th {
+  background-color: #f2f2f2;
+  padding: 12px 15px;
+  border-bottom: 2px solid #ddd;
+  text-align: left;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.invoice-list td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap; /* テキストを折り返さない */
+}
+
+/* 各カラムの幅を調整して項目名が折り返されないようにする */
+.invoice-list th:nth-child(1), .invoice-list td:nth-child(1) {
+  width: 18%;
+}
+
+.invoice-list th:nth-child(2), .invoice-list td:nth-child(2) {
+  width: 28%;
+}
+
+.invoice-list th:nth-child(3), .invoice-list td:nth-child(3) {
+  width: 18%;
+}
+
+.invoice-list th:nth-child(4), .invoice-list td:nth-child(4) {
+  width: 18%;
+}
+
+.invoice-list th:nth-child(5), .invoice-list td:nth-child(5) {
+  width: 18%;
+}
+
+/* ボタンの共通スタイル */
+.delete-button, .edit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* 削除ボタンと編集ボタンの間に余白を追加 */
+.invoice-list td .delete-button {
+  margin-right: 10px;
+}
+
+/* 削除ボタンのスタイル */
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+/* 編集ボタンのスタイル */
+.edit-button {
+  background-color: #00aaff;
+  color: white;
+  border: none;
+}
+
+.edit-button:hover {
+  background-color: #0088cc;
+}
+
+/* 検索ボックスと検索ボタンのスタイル */
+.search-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.search-bar input {
   padding: 10px;
-  margin-bottom: 5px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f9f9f9;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  width: 500px; /* 検索ボックスの幅をさらに広げる */
+  margin-right: 20px; /* 検索ボックスとボタンの間に余白を追加 */
 }
 
-.invoice-list li:hover {
-  background-color: #f1f1f1;
+.search-bar .search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar .search-button:hover {
+  background-color: #555;
+}
+
+/* 新規請求書作成ボタンのスタイル */
+.new-invoice-button {
+  background-color: #4CAF50;  /* 緑色 */
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto; /* 右端に配置 */
+}
+
+.new-invoice-button:hover {
+  background-color: #45a049;
+}
+
+/* 請求書リストと新規請求書作成ボタンを左右に分ける */
+.header-row {
+  display: flex;
+  justify-content: space-between; /* 左右に分ける */
+  align-items: center;            /* 縦方向の高さを揃える */
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* 請求書リストの左揃え */
+.title {
+  text-align: left;
+  flex: 1; /* 左揃えに余裕を持たせる */
 }
