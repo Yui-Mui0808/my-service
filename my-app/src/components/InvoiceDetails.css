@@ -17,4 +17,69 @@
   .invoice-item:last-child {
     border-bottom: none;
   }
- 
+ /* ページ全体のスタイル */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #333;
+}
+
+p {
+  text-align: center;
+}
+
+/* 請求書詳細の全体コンテナに背景色とボーダーを追加 */
+.invoice-details-container {
+  background-color: #f9f9f9;  /* 薄いグレーの背景色 */
+  padding: 20px;              /* 内側の余白を広げる */
+  border: 1px solid #ddd;      /* 周囲に薄いボーダーを追加 */
+  border-radius: 10px;         /* 四隅を丸くする */
+  margin-bottom: 20px;         /* 下に余白を追加 */
+}
+
+/* タイトルのデザインを強調 */
+.invoice-details-container h2 {
+  font-size: 24px;             /* 大きな文字サイズ */
+  margin-bottom: 10px;         /* タイトルの下に余白 */
+  border-bottom: 2px solid #333; /* タイトル下に太めのボーダーを追加 */
+  padding-bottom: 5px;         /* タイトルとボーダーの間に少し余白 */
+}
+
+/* 各項目のデザイン */
+.invoice-details-container p {
+  margin: 8px 0;               /* 各項目の上下に余白 */
+  font-size: 16px;             /* 文字サイズを統一 */
+}
+
+/* 項目リストのデザイン */
+.invoice-item-list {
+  list-style-type: none;        /* デフォルトの箇条書きマーカーを削除 */
+  padding: 0;                   /* 内側の余白をなくす */
+}
+
+.invoice-item-list li {
+  padding: 10px;                /* 各項目の上下に余白 */
+  border-bottom: 1px solid #ddd; /* 項目間にボーダーを追加 */
+}
+
+/* 合計金額のデザイン */
+.invoice-total {
+  font-weight: bold;            /* 太字にする */
+  font-size: 18px;              /* 文字サイズを少し大きく */
+  margin-top: 10px;             /* 上に余白を追加 */
+}
