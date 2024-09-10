@@ -1,65 +1,77 @@
-/* モーダル全体のスタイル */
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 400px; /* モーダルの幅を広げて、要素が収まるように調整 */
-    max-width: 90%;
-  }
-  
-  /* モーダルのヘッダー */
-  .modal h3 {
-    margin-top: 0;
-    text-align: left;
-  }
-  
-  /* モーダル内の情報を左揃えにする */
-  .modal-body {
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  /* 削除するボタンとキャンセルボタンのスタイル */
-  .modal-buttons button {
-    width: 120px; /* 幅を固定して文字が収まるようにする */
-    padding: 10px 20px; /* ボタンのパディングを設定 */
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  /* 削除するボタンのスタイル */
-  .modal-buttons .delete-button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    margin-right: 10px; /* キャンセルボタンとの間に適切な余白を設定 */
-  }
-  
-  .modal-buttons .delete-button:hover {
-    background-color: #d32f2f;
-  }
-  
-  /* キャンセルボタンのスタイル */
-  .modal-buttons .cancel-button {
-    background-color: #f0f0f0;
-    color: black;
-    border: none;
-  }
-  
-  .modal-buttons .cancel-button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  /* モーダル内のボタン配置を揃える */
-  .modal-buttons {
-    display: flex;
-    justify-content: flex-end; /* ボタンを右揃えに */
-    gap: 10px; /* ボタン間の余白を追加 */
-  }
-  
+/* Modal.css */
+
+/* モーダルの背景（画面中央に配置するため） */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 背景を暗くする */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* モーダルウィンドウ本体 */
+.modal-window {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影をつけてモーダルらしくする */
+}
+
+/* タイトルのスタイル */
+.modal-title {
+  font-size: 1.3rem; /* フォントサイズを大きく */
+  font-weight: bold;
+  text-align: left; /* 左揃え */
+  margin-bottom: 0; /* 余白をなくす */
+}
+
+/* サブタイトルのスタイル */
+.modal-subtitle {
+  font-size: 1rem;
+  color: #666; /* 少しグレーにする */
+  text-align: left; /* 左揃え */
+  margin-top: 0; /* 余白をなくす */
+  margin-bottom: 15px; /* 下に少し余白を追加 */
+}
+
+/* ボタンのコンテナ */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end; /* ボタンを右揃え */
+  gap: 10px; /* ボタン同士の間に余白を追加 */
+  margin-top: 20px;
+}
+
+/* 削除ボタン */
+.delete-confirm-btn {
+  background-color: #dc3545; /* 赤色 */
+  color: white; /* 文字を白に */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+/* キャンセルボタン */
+.cancel-btn {
+  background-color: #f0f0f0; /* 薄いグレー */
+  color: #333; /* 濃いグレー */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cancel-button:hover {
+  background-color: #dcdcdc;
+}

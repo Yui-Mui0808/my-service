@@ -1,145 +1,95 @@
-/* テーブル全体のスタイル */
-.invoice-list {
+/* 全体に余白を持たせる */
+.page-container {
+  padding: 20px;
+  background-color: #f0f0f0; /* 薄いグレー */
+  max-width: 1200px;
+  margin: 0 auto; /* 画面中央に余白 */
+}
+
+/* タイトル文字サイズを小さくする */
+.page-container h1 {
+  font-size: 24px; /* 少し小さめに調整 */
+}
+
+/* 検索ボックスと検索ボタンの配置 */
+.container {
+  display: flex;
+  justify-content: space-between; /* 左に検索ボックス、右に新規作成ボタン */
+  align-items: center;
+  padding: 20px 0; /* 上下に余白 */
+}
+
+/* 検索ボックスと検索ボタンのデザイン */
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  height: 25px; 
+  width: 500px; /* 横幅 */
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-right: 10px; /* ボタンとの余白 */
+}
+
+.search-container button {
+  height: 45px; 
+  background-color: #333; /* 検索ボタンの色 */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* 新規請求書作成ボタンのデザイン */
+.new-invoice-btn {
+  background-color: #28a745; /* 緑色 */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* テーブルセルの背景色を白にする */
+.table-container {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  text-align: left; /* テーブル全体を左揃えにする */
 }
 
-.invoice-list th {
-  background-color: #f2f2f2;
-  padding: 12px 15px;
-  border-bottom: 2px solid #ddd;
-  text-align: left;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.invoice-list td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-  white-space: nowrap; /* テキストを折り返さない */
-}
-
-/* 各カラムの幅を調整して項目名が折り返されないようにする */
-.invoice-list th:nth-child(1), .invoice-list td:nth-child(1) {
-  width: 18%;
-}
-
-.invoice-list th:nth-child(2), .invoice-list td:nth-child(2) {
-  width: 28%;
-}
-
-.invoice-list th:nth-child(3), .invoice-list td:nth-child(3) {
-  width: 18%;
-}
-
-.invoice-list th:nth-child(4), .invoice-list td:nth-child(4) {
-  width: 18%;
-}
-
-.invoice-list th:nth-child(5), .invoice-list td:nth-child(5) {
-  width: 18%;
-}
-
-/* ボタンの共通スタイル */
-.delete-button, .edit-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  width: 100px;
-  height: 40px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block;
-}
-
-/* 削除ボタンと編集ボタンの間に余白を追加 */
-.invoice-list td .delete-button {
-  margin-right: 10px;
-}
-
-/* 削除ボタンのスタイル */
-.delete-button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-}
-
-.delete-button:hover {
-  background-color: #d32f2f;
-}
-
-/* 編集ボタンのスタイル */
-.edit-button {
-  background-color: #00aaff;
-  color: white;
-  border: none;
-}
-
-.edit-button:hover {
-  background-color: #0088cc;
-}
-
-/* 検索ボックスと検索ボタンのスタイル */
-.search-bar {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.search-bar input {
+.table-container th, .table-container td {
+  background-color: white; /* セルの背景色を白に設定 */
   padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 500px; /* 検索ボックスの幅をさらに広げる */
-  margin-right: 20px; /* 検索ボックスとボタンの間に余白を追加 */
-}
-
-.search-bar .search-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  background-color: #333;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.search-bar .search-button:hover {
-  background-color: #555;
-}
-
-/* 新規請求書作成ボタンのスタイル */
-.new-invoice-button {
-  background-color: #4CAF50;  /* 緑色 */
-  color: white;
-  padding: 12px 25px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: auto; /* 右端に配置 */
-}
-
-.new-invoice-button:hover {
-  background-color: #45a049;
-}
-
-/* 請求書リストと新規請求書作成ボタンを左右に分ける */
-.header-row {
-  display: flex;
-  justify-content: space-between; /* 左右に分ける */
-  align-items: center;            /* 縦方向の高さを揃える */
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-/* 請求書リストの左揃え */
-.title {
   text-align: left;
-  flex: 1; /* 左揃えに余裕を持たせる */
+  border: 1px solid #ddd;
+}
+
+.table-container th {
+  background-color: #f8f9fa; /* テーブルヘッダーの背景色 */
+  font-weight: bold;
+}
+
+.edit-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
 }

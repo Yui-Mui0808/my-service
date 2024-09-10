@@ -1,23 +1,17 @@
 import React from 'react';
-import './App.css';
-
-// 必要なインポートを追加
-import { InvoiceProvider } from './context/InvoiceContext'; // InvoiceProviderをインポート
-import InvoiceList from './components/InvoiceList'; // InvoiceListをインポート
-import InvoiceDetails from './components/InvoiceDetails'; // InvoiceDetailsをインポート
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import InvoiceList from './components/InvoiceList';
+import NewInvoice from './components/NewInvoice';  // 新しいコンポーネントをインポート
 
 const App: React.FC = () => {
-    return (
-        <div className="app-container"> {/* この行を追加 */}
-            <InvoiceProvider>
-                <div>
-                    <h1>請求書表示サービス</h1>
-                    <InvoiceList />
-                    <InvoiceDetails />
-                </div>
-            </InvoiceProvider>
-        </div>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<InvoiceList />} />
+        <Route path="/new-invoice" element={<NewInvoice />} />  {/* 新しい請求書作成ページ */}
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;
