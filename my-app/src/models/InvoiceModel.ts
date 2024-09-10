@@ -1,5 +1,7 @@
 // src/models/InvoiceModel.ts
 
+// src/models/InvoiceModel.ts
+
 // 請求書項目のクラス
 export class InvoiceItem {
   constructor(
@@ -31,16 +33,21 @@ export class Invoice {
   }
 
   // 全ての項目の合計金額を計算
-  private calculateTotal(): number {
+  calculateTotal(): number {
     return this.items.reduce((sum, item) => sum + item.getTotal(), 0);
   }
 }
 
 // インターフェース定義
-export interface Invoice {
-  invoiceNumber: string;  // 請求書番号
-  customer: string;       // 取引先
-  invoiceDate: string;    // 請求日
-  paymentDue: string;     // 支払期限
-  totalAmount: number;    // 合計金額
+export interface IInvoice {
+  invoiceNumber: string;
+  customer: string;
+  invoiceDate: string;
+  paymentDue: string;
+  totalAmount: number;
+  companyName: string;
+  registrationNumber: string;
+  items: InvoiceItem[];  // 型はInvoiceItemクラスを使用
+  calculateTotal(): number;
 }
+
