@@ -1,48 +1,228 @@
-.new-invoice-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .new-invoice-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .new-invoice-form div {
-    margin-bottom: 15px;
-  }
-  
-  .new-invoice-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .new-invoice-form input {
-    width: 100%;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .new-invoice-form button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .new-invoice-form button:hover {
-    background-color: #45a049;
-  }
-  
+.form-title {
+  font-size: 1.5rem; /* フォントサイズを調整 */
+  font-weight: bold; /* 文字を太く */
+  margin-bottom: 20px; /* 下に余白を追加 */
+}
+
+.invoice-form {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.add-item-btn {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-item-btn:hover {
+  background-color: #0056b3;
+}
+
+.totals {
+  text-align: right;
+}
+
+/* 戻るボタンのスタイルを追加 */
+.back-btn {
+  padding: 10px 20px;
+  background-color: #007bff; /* 青色に設定 */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: auto; /* 左端に寄せる */
+}
+
+.back-btn:hover {
+  background-color: #0056b3; /* ホバー時の色 */
+}
+
+/* 他のボタンとのレイアウトはそのまま */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-btn, .save-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+}
+
+.save-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #218838;
+}
+
+/* フォントサイズを調整 */
+h1 {
+  font-size: 24px; /* 小さくする */
+}
+
+/* 上部のコンテナを左右に配置 */
+.top-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 左側のフォーム項目 */
+.left-container {
+  width: 48%; /* 左側の幅を調整 */
+}
+
+/* 右側のフォーム項目 */
+.right-container {
+  width: 48%; /* 右側の幅を調整 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* 請求先の入力ボックスと御中を横並びに */
+.input-with-span {
+  display: flex;
+  align-items: center;
+}
+
+.input-with-span input {
+  flex-grow: 1; /* inputをできるだけ広げる */
+}
+
+.input-with-span span {
+  margin-left: 8px; /* 横に隣り合わせになるように余白を追加 */
+  white-space: nowrap; /* これにより「御中」を縦書きではなく横書きにする */
+}
+
+/* テーブルのレイアウトを固定にする */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 列幅を固定 */
+}
+
+th, td {
+  padding: 12px; /* 入力ボックスのために余白を広げる */
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 16px; /* テーブルのフォントサイズを少し大きくする */
+}
+
+/* 品番・品名の列を大幅に広くする */
+th:nth-child(1), td:nth-child(1) {
+  width: 50%; /* 品番・品名の列を広く */
+}
+
+td:nth-child(1) input {
+  width: 100%; /* 入力ボックスの幅を列の幅に合わせる */
+}
+
+/* 数量を狭くする */
+th:nth-child(2), td:nth-child(2) {
+  width: 10%;
+}
+
+td:nth-child(2) input {
+  width: 100%; /* 数量の入力ボックスの幅を列にフィットさせる */
+}
+
+/* 単位を狭くする */
+th:nth-child(3), td:nth-child(3) {
+  width: 10%;
+}
+
+td:nth-child(3) input {
+  width: 100%; /* 単位の入力ボックスも同様に */
+}
+
+/* 単価を狭くする */
+th:nth-child(4), td:nth-child(4) {
+  width: 10%;
+}
+
+td:nth-child(4) input {
+  width: 100%; /* 単価の入力ボックス */
+}
+
+/* 税率の列を適度に設定 */
+th:nth-child(5), td:nth-child(5) {
+  width: 10%;
+}
+
+td:nth-child(5) select {
+  width: 100%; /* 税率の選択ボックスも列にフィットさせる */
+}
+
+/* 金額の列を少し広くする */
+th:nth-child(6), td:nth-child(6) {
+  width: 10%; /* 金額の列 */
+}
+
+/* 全体のフォームを大きくする */
+.invoice-form {
+  font-size: 16px; /* 全体のフォントサイズを大きくする */
+}
+
+.add-item-btn {
+  font-size: 16px; /* 明細追加ボタンのフォントも調整 */
+}
