@@ -93,3 +93,34 @@
   cursor: pointer;
   border-radius: 4px;
 }
+
+/* 請求書リストのテーブルスタイル調整 */
+.table-container th, .table-container td {
+  padding: 10px; /* 余白の調整 */
+  text-align: left; /* 左寄せ */
+}
+
+/* 各列の幅設定 */
+.table-container th:nth-child(1), .table-container td:nth-child(1) {
+  width: 15%; /* 請求書番号 */
+}
+
+.table-container th:nth-child(2), .table-container td:nth-child(2) {
+  width: 25%; /* 取引先 */
+}
+
+.table-container th:nth-child(3), .table-container td:nth-child(3) {
+  width: 15%; /* 請求日 */
+}
+
+.table-container th:nth-child(4), .table-container td:nth-child(4) {
+  width: 15%; /* 支払期限 */
+}
+
+.table-container th:nth-child(5), .table-container td:nth-child(5) {
+  width: 15%; /* 合計金額 */
+}
+
+.table-container th:nth-child(6), .table-container td:nth-child(6) {
+  width: 15%; /* 操作 */
+}
