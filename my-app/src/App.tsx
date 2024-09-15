@@ -1,21 +1,26 @@
+// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import InvoiceList from './components/InvoiceList';
-import NewInvoice from './components/NewInvoice';  // 新しいコンポーネントをインポート
-import EditInvoice from './components/EditInvoice'; // ← 新しい編集ページをインポート
+import NewInvoice from './components/NewInvoice';
+import EditInvoice from './components/EditInvoice';
+import InvoiceDetails from './components/InvoiceDetails';
+import { InvoiceProvider } from './context/InvoiceContext'; // InvoiceProviderをインポート
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        {/* 請求書リストページ */}
-        <Route path="/" element={<InvoiceList />} />
-        {/* 新規請求書作成ページ */}
-        <Route path="/new-invoice" element={<NewInvoice />} />
-        <Route path="/edit-invoice/:id" element={<EditInvoice />} /> {/* ← 編集ページのルート */}
-      </Routes>
-    </Router>
+    <InvoiceProvider>  {/* アプリ全体をProviderでラップ */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<InvoiceList />} />
+          <Route path="/new-invoice" element={<NewInvoice />} />
+          <Route path="/edit-invoice/:id" element={<EditInvoice />} />
+          <Route path="/invoice-details/:invoiceNumber" element={<InvoiceDetails />} />
+        </Routes>
+      </Router>
+    </InvoiceProvider>
   );
 };
 
 export default App;
+

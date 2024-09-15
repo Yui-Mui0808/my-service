@@ -1,23 +1,46 @@
-import React, { useState } from 'react';  // useStateをインポート
-import { useNavigate } from 'react-router-dom';  // ページ遷移用のフックをインポート
-import './InvoiceList.css';  // CSSファイルのインポート
-import Modal from './Modal';  // モーダルコンポーネントのインポート
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './InvoiceList.css';
+import { InvoiceContext } from '../context/InvoiceContext';  // コンテキストをインポート
+import Modal from './Modal';
+import { Invoice } from '../models/InvoiceModel';  // Invoice型をインポート
 
 function InvoiceList() {
-  // モーダルの表示状態と選択された請求書の情報を管理
+  const { invoices } = useContext(InvoiceContext) || { invoices: [] };  // Contextからデータを取得
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedInvoice, setSelectedInvoice] = useState({ number: '', client: '' });
-  const navigate = useNavigate();  // ページ遷移のためのフック
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);  // Invoice型を指定
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredInvoices, setFilteredInvoices] = useState(invoices);
+  const [searchedInvoice, setSearchedInvoice] = useState<Invoice | null>(null);  // 検索結果の請求書を保存するためのstate
+  const navigate = useNavigate();
+
+  // 検索ボタンクリック時の処理
+  const handleSearch = () => {
+    const filtered = invoices.filter((invoice) =>
+      invoice.invoiceNumber.includes(searchTerm) || invoice.companyName.includes(searchTerm)
+    );
+    setFilteredInvoices(filtered);
+
+    // 最初の検索結果を詳細表示するためにセット
+    if (filtered.length > 0) {
+      setSearchedInvoice(filtered[0]); // 検索結果の最初の請求書を表示
+    }
+  };
 
   // 削除ボタンクリック時にモーダルを表示
-  const handleDeleteClick = (invoiceNumber: string, clientName: string) => {
-    setSelectedInvoice({ number: invoiceNumber, client: clientName });
+  const handleDeleteClick = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);  // Invoice全体を渡す
     setIsModalOpen(true);
   };
 
   // 編集ボタンクリック時に編集ページへ遷移
   const handleEditClick = (invoiceNumber: string) => {
-    navigate(`/edit-invoice/${invoiceNumber}`);  // 編集ページに遷移
+    navigate(`/edit-invoice/${invoiceNumber}`);
+  };
+
+  // 詳細ボタンクリック時に詳細ページへ遷移
+  const handleDetailsClick = (invoiceNumber: string) => {
+    navigate(`/invoice-details/${invoiceNumber}`);
   };
 
   // モーダルを閉じる
@@ -29,23 +52,26 @@ function InvoiceList() {
     <div className="page-container">
       <h1>請求書リスト</h1>
       <div className="container">
+        {/* 検索ボックスとボタン */}
         <div className="search-container">
-          <input type="text" placeholder="請求書番号や取引先を検索..." />
-          <button>検索</button>
+          <input 
+            type="text" 
+            placeholder="請求書番号や取引先を検索..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button onClick={handleSearch}>検索</button>
         </div>
-        {/* 新規請求書作成ボタン */}
-        <button 
-          className="new-invoice-btn" 
-          onClick={() => navigate('/new-invoice')}  // クリック時に遷移
-        >
+        <button className="new-invoice-btn" onClick={() => navigate('/new-invoice')}>
           新規請求書作成
         </button>
       </div>
-      
+
       {/* 請求書リストのテーブル */}
       <table className="table-container">
         <thead>
           <tr>
+            <th></th>
             <th>請求書番号</th>
             <th>取引先</th>
             <th>請求日</th>
@@ -55,49 +81,59 @@ function InvoiceList() {
           </tr>
         </thead>
         <tbody>
-          {/* ダミーデータ */}
-          <tr>
-            <td>INV-001</td>
-            <td>株式会社 鬼殺隊</td>
-            <td>2024-01-01</td>
-            <td>2024-01-31</td>
-            <td>605,000円</td>
-            <td>
-              <button className="edit-btn" onClick={() => handleEditClick('INV-001')}>編集</button> {/* 編集ボタンのクリック処理 */}
-              <button className="delete-btn" onClick={() => handleDeleteClick('INV-001', '株式会社 鬼殺隊')}>削除</button>
-            </td>
-          </tr>
-          <tr>
-            <td>INV-002</td>
-            <td>有限会社 蝶屋敷</td>
-            <td>2024-02-01</td>
-            <td>2024-02-29</td>
-            <td>198,000円</td>
-            <td>
-              <button className="edit-btn" onClick={() => handleEditClick('INV-002')}>編集</button> {/* 編集ボタンのクリック処理 */}
-              <button className="delete-btn" onClick={() => handleDeleteClick('INV-002', '有限会社 蝶屋敷')}>削除</button>
-            </td>
-          </tr>
-          <tr>
-            <td>INV-003</td>
-            <td>株式会社 霞柱邸</td>
-            <td>2024-03-01</td>
-            <td>2024-03-31</td>
-            <td>495,000円</td>
-            <td>
-              <button className="edit-btn" onClick={() => handleEditClick('INV-003')}>編集</button> {/* 編集ボタンのクリック処理 */}
-              <button className="delete-btn" onClick={() => handleDeleteClick('INV-003', '株式会社 霞柱邸')}>削除</button>
-            </td>
-          </tr>
-          {/* 他の請求書も同様 */}
+          {filteredInvoices.map((invoice) => (
+            <tr key={invoice.invoiceNumber}>
+              <td><input type="checkbox" /></td>
+              <td>{invoice.invoiceNumber}</td>
+              <td>{invoice.companyName}</td>
+              <td>{invoice.invoiceDate}</td>
+              <td>{invoice.paymentDue}</td>
+              <td>{invoice.totalAmount.toLocaleString()}円</td>
+              <td>
+                <button className="edit-btn" onClick={() => handleEditClick(invoice.invoiceNumber)}>編集</button>
+                <button className="delete-btn" onClick={() => handleDeleteClick(invoice)}>削除</button>
+                <button className="details-btn" onClick={() => handleDetailsClick(invoice.invoiceNumber)}>詳細</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
-      {/* モーダルの表示 */}
+      {/* 検索結果の詳細表示 */}
+      {searchedInvoice && (
+        <div className="search-results">
+          <h2 className="invoice-details-title">請求書詳細</h2>  {/* タイトルを変更＆左揃え */}
+          <table className="invoice-details-table">
+            <tbody>
+              <tr>
+                <th>請求書番号</th>
+                <td>{searchedInvoice.invoiceNumber}</td>
+              </tr>
+              <tr>
+                <th>取引先</th>
+                <td>{searchedInvoice.companyName}</td>
+              </tr>
+              <tr>
+                <th>請求日</th>
+                <td>{searchedInvoice.invoiceDate}</td>
+              </tr>
+              <tr>
+                <th>支払期限</th>
+                <td>{searchedInvoice.paymentDue}</td>
+              </tr>
+              <tr>
+                <th>合計金額</th>
+                <td>{searchedInvoice.totalAmount.toLocaleString()}円</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
+
       {isModalOpen && (
         <Modal
-          invoiceNumber={selectedInvoice.number}
-          clientName={selectedInvoice.client}
+          invoiceNumber={selectedInvoice?.invoiceNumber ?? ''}
+          clientName={selectedInvoice?.companyName ?? ''}
           onClose={handleCloseModal}
         />
       )}
@@ -106,3 +142,4 @@ function InvoiceList() {
 }
 
 export default InvoiceList;
+
