@@ -33,4 +33,3 @@ export const invoices: Invoice[] = [
     [ new InvoiceItem('指導費', 450000, 45000) ]
   ),
 ];
-

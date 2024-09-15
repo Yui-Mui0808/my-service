@@ -1,77 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './NewInvoice.css';
-
-// Item型を定義
-type Item = {
-  name: string;
-  quantity: number;
-  unit: string;
-  unitPrice: number;
-  taxRate: string;
-  total: number;
-};
+import { InvoiceContext } from '../context/InvoiceContext';
+import { Invoice, InvoiceItem } from '../models/InvoiceModel';
 
 const EditInvoice: React.FC = () => {
-  const { id } = useParams();  // ← IDを取得
+  const { id } = useParams();  
   const navigate = useNavigate();
+  const { invoices, updateInvoice } = useContext(InvoiceContext) || { invoices: [], updateInvoice: () => {} };
 
   const [invoiceNumber, setInvoiceNumber] = useState('');
   const [invoiceDate, setInvoiceDate] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [clientName, setClientName] = useState('');
-
-  const [items, setItems] = useState<Item[]>([
-    { name: '', quantity: 1, unit: '', unitPrice: 0, taxRate: '10%', total: 0 },
+  const [items, setItems] = useState<InvoiceItem[]>([
+    new InvoiceItem('', 1, '', 0, '10%', 0)
   ]);
 
   // 請求書データのロード処理
   useEffect(() => {
-    // APIまたはローカルストレージから請求書データをロード
-    // 以下は仮のデータ。実際にはバックエンドと連携するか、保存済みデータから取得します。
-    const savedInvoice = {
-      invoiceNumber: 'INV-001',
-      invoiceDate: '2024-01-01',
-      dueDate: '2024-01-31',
-      companyName: '株式会社 鬼殺隊',
-      clientName: '取引先企業',
-      items: [
-        { name: '商品A', quantity: 1, unit: '個', unitPrice: 500, taxRate: '10%', total: 500 }
-      ]
-    };
+    const savedInvoice = invoices.find((invoice) => invoice.invoiceNumber === id);
+    if (savedInvoice) {
+      setInvoiceNumber(savedInvoice.invoiceNumber);
+      setInvoiceDate(savedInvoice.invoiceDate);
+      setDueDate(savedInvoice.paymentDue);
+      setCompanyName(savedInvoice.companyName);
+      setClientName(savedInvoice.customer);
+      setItems(savedInvoice.items);
+    }
+  }, [id, invoices]);
 
-    setInvoiceNumber(savedInvoice.invoiceNumber);
-    setInvoiceDate(savedInvoice.invoiceDate);
-    setDueDate(savedInvoice.dueDate);
-    setCompanyName(savedInvoice.companyName);
-    setClientName(savedInvoice.clientName);
-    setItems(savedInvoice.items);
-  }, [id]);  // IDが変わるたびにデータをロード
-
+  // 明細を追加
   const addItem = () => {
-    setItems([...items, { name: '', quantity: 1, unit: '', unitPrice: 0, taxRate: '10%', total: 0 }]);
+    setItems([...items, new InvoiceItem('', 1, '', 0, '10%', 0)]);
   };
 
-  const updateItem = (index: number, field: keyof Item, value: string | number) => {
-    const updatedItems: Record<keyof Item, any>[] = [...items];
-    updatedItems[index][field] = value;
-
+  // 明細を更新
+  const updateItem = (index: number, field: keyof InvoiceItem, value: string | number) => {
+    const updatedItems = [...items];
+    
+    // `field` が 'quantity' か 'unitPrice' なら数値に変換
     if (field === 'quantity' || field === 'unitPrice') {
-      updatedItems[index].total = updatedItems[index].quantity * updatedItems[index].unitPrice;
+      updatedItems[index][field] = Number(value); 
+    } else {
+      updatedItems[index][field] = String(value); 
     }
 
-    setItems(updatedItems as Item[]);
+    // 合計金額を再計算
+    updatedItems[index].total = updatedItems[index].quantity * updatedItems[index].unitPrice;
+
+    setItems(updatedItems);
   };
 
+  // subtotal の計算
   const subtotal = items.reduce((sum, item) => sum + item.total, 0);
   const tax = subtotal * 0.1;
   const total = subtotal + tax;
 
+  // 保存処理
+  const handleSave = () => {
+    // `calculateTotal()` メソッドを利用して、明細項目の合計を計算
+    const updatedInvoice: Invoice = new Invoice(
+      invoiceNumber,
+      invoiceDate,
+      dueDate,
+      companyName,
+      clientName,
+      items,
+      total, // 合計金額を反映
+      ''  // registrationNumber（必要に応じて追加）
+    );
+    
+    updateInvoice(id as string, updatedInvoice);  // 請求書の更新
+    navigate('/');  // リストページに戻る
+  };
+
   return (
     <div className="invoice-form">
       <h1>請求書の編集</h1>
-
       <div className="top-container">
         <div className="left-container">
           <div className="form-group">
@@ -86,23 +93,19 @@ const EditInvoice: React.FC = () => {
               <span>御中</span>
             </div>
           </div>
-
           <div className="form-group">
             <label>請求書番号</label>
             <input type="text" value={invoiceNumber} disabled />
           </div>
-
           <div className="form-group">
             <label>請求日</label>
             <input type="date" value={invoiceDate} onChange={(e) => setInvoiceDate(e.target.value)} />
           </div>
-
           <div className="form-group">
             <label>支払期限</label>
             <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
           </div>
         </div>
-
         <div className="right-container">
           <div className="form-group">
             <label>自社名</label>
@@ -187,10 +190,11 @@ const EditInvoice: React.FC = () => {
       <div className="section buttons">
         <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
         <button className="cancel-btn">キャンセル</button>
-        <button className="save-btn">保存する</button>
+        <button className="save-btn" onClick={handleSave}>保存する</button>
       </div>
     </div>
   );
 };
 
 export default EditInvoice;
+

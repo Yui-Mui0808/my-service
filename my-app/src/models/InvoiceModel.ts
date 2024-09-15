@@ -1,53 +1,33 @@
 // src/models/InvoiceModel.ts
 
-// src/models/InvoiceModel.ts
-
 // 請求書項目のクラス
 export class InvoiceItem {
   constructor(
-    public itemName: string,
-    public amount: number,
-    public tax: number
+    public name: string,          // 商品名
+    public quantity: number,      // 数量
+    public unit: string,          // 単位
+    public unitPrice: number,     // 単価
+    public taxRate: string,       // 税率
+    public total: number          // 合計金額
   ) {}
-
-  // 消費税を含めた合計金額を計算
-  getTotal(): number {
-    return this.amount + this.tax;
-  }
 }
 
 // 請求書のクラス
 export class Invoice {
-  public totalAmount: number;
-
   constructor(
-    public companyName: string,        // 自社名
-    public registrationNumber: string, // 登録番号
-    public invoiceNumber: string,      // 請求書番号
-    public invoiceDate: string,        // 請求日
-    public paymentDue: string,         // 支払期限
-    public customer: string,           // 取引先
-    public items: InvoiceItem[]        // 請求書項目
-  ) {
-    this.totalAmount = this.calculateTotal();  // 合計金額を計算
-  }
+    public invoiceNumber: string,        // 請求書番号
+    public invoiceDate: string,          // 請求日
+    public paymentDue: string,           // 支払期限
+    public companyName: string,          // 会社名
+    public customer: string,             // 顧客名
+    public items: InvoiceItem[],         // 明細項目（InvoiceItemの配列）
+    public totalAmount: number,          // 総合計金額
+    public registrationNumber: string    // 登録番号
+  ) {}
 
-  // 全ての項目の合計金額を計算
+  // calculateTotal メソッドを修正
   calculateTotal(): number {
-    return this.items.reduce((sum, item) => sum + item.getTotal(), 0);
+    // 明細項目の単価 × 数量を合計する
+    return this.items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   }
 }
-
-// インターフェース定義
-export interface IInvoice {
-  invoiceNumber: string;
-  customer: string;
-  invoiceDate: string;
-  paymentDue: string;
-  totalAmount: number;
-  companyName: string;
-  registrationNumber: string;
-  items: InvoiceItem[];  // 型はInvoiceItemクラスを使用
-  calculateTotal(): number;
-}
-

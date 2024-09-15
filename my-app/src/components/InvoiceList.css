@@ -30,14 +30,14 @@
   max-width: 1200px;  /* テーブルと揃えて1200pxに設定 */
   margin-bottom: 20px; /* テーブルとの余白 */
   box-sizing: border-box;  /* パディングを含めた幅調整 */
+  gap: 20px; /* 要素間の余白を追加 */
 }
 
 /* 検索ボックスと検索ボタンを左揃えに */
 .search-container {
   display: flex;
-  justify-content: flex-start; /* 左揃えに変更 */
   align-items: center;
-  gap: 5px; /* ボタンと検索ボックスの間の余白 */
+  margin-left: 20px; /* 検索ボックスの左側に余白を設ける */
 }
 
 .search-container input {
@@ -58,6 +58,7 @@
   font-size: 14px;
   cursor: pointer;
   border-radius: 4px;
+  margin-left: 5px; /* 検索ボタンと検索ボックスの間の余白 */
 }
 
 /* 新規請求書作成ボタンのデザイン */
@@ -69,7 +70,7 @@
   font-size: 14px;
   cursor: pointer;
   border-radius: 4px;
-  margin-left: auto; /* 右端に揃える */
+  margin-right: 20px; /* 新規請求書作成ボタンの右側に余白を設ける */
 }
 
 /* テーブルセルの背景色を白にする */
