@@ -226,3 +226,32 @@ th:nth-child(6), td:nth-child(6) {
 .add-item-btn {
   font-size: 16px; /* 明細追加ボタンのフォントも調整 */
 }
+
+/* 新規追加 */
+body {
+  background-color: #f0f0f0; /* 薄いグレー */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* 全体のコンテナを中央に配置し、白い背景を適用 */
+.invoice-container {
+  max-width: 1000px; /* 800px程度に横幅を制限 */
+  margin: 0 auto; /* 中央に寄せる */
+  background-color: white; /* 背景色を白に設定 */
+  padding: 20px; /* コンテンツ部分に余白を追加 */
+  border-radius: 10px; /* 角を少し丸く */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 影をつけて視覚的に浮かせる */
+}
+
+.form-group input, .form-group select {
+  width: 100%; /* 入力項目の横幅をコンテナに合わせて100%に */
+  padding: 10px; /* 内側に余白を設定 */
+  box-sizing: border-box; /* パディングを含めて幅を調整 */
+}
+
+.table {
+  width: 100%; /* テーブル全体もコンテナ幅に合わせる */
+  border-collapse: collapse; /* 枠線の重なりを解消 */
+}

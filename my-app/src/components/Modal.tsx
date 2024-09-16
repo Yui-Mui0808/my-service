@@ -6,9 +6,10 @@ interface ModalProps {
   invoiceNumber: string;
   clientName: string;
   onClose: () => void;
+  onDeleteConfirm: () => void;  // 削除確認時の関数を追加
 }
 
-const Modal: React.FC<ModalProps> = ({ invoiceNumber, clientName, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ invoiceNumber, clientName, onClose, onDeleteConfirm }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-window">
@@ -19,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ invoiceNumber, clientName, onClose }) => 
         <p>請求書番号: {invoiceNumber}</p>
         <p>取引先: {clientName}</p>
         <div className="modal-buttons">
-        <button className="delete-confirm-btn">削除する</button>
+        <button className="delete-confirm-btn" onClick={onDeleteConfirm}>削除する</button> {/* 変更済み */}
         <button className="cancel-btn" onClick={onClose}>キャンセル</button>
         </div>
       </div>

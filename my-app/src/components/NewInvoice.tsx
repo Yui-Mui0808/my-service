@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';  // ← useContextを追加
 import { useNavigate } from 'react-router-dom'; // ← この行を追加
 import './NewInvoice.css';
+import { InvoiceContext } from '../context/InvoiceContext';  // ← InvoiceContextをインポート
 
 // Item型を定義
 type Item = {
@@ -13,8 +14,30 @@ type Item = {
 };
 
 const NewInvoice: React.FC = () => {
+  const context = useContext(InvoiceContext);
+
+  if (!context) {
+    throw new Error('InvoiceContextが提供されていません');
+  }
+
+  const { invoices, addInvoice } = context;  // invoices を取得
+
   const navigate = useNavigate();  // ← ここに追加
-  const invoiceNumber = '000001'; // 自動採番
+
+  // 最新の請求書番号を基に次の請求書番号を生成する関数
+  const generateInvoiceNumber = () => {
+    if (invoices.length === 0) {
+      return 'INV-001';  // リストが空の場合は最初の番号を設定
+    }
+
+    const latestInvoice = invoices[invoices.length - 1];
+    const latestNumber = latestInvoice.invoiceNumber.split('-')[1];  // "INV-001" の "001" 部分を取得
+    const nextNumber = String(parseInt(latestNumber) + 1).padStart(3, '0');  // 次の番号を生成
+    return `INV-${nextNumber}`;  // 次の請求書番号を生成
+  };
+
+  const invoiceNumber = generateInvoiceNumber();  // 自動採番
+
   const [invoiceDate, setInvoiceDate] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -48,6 +71,29 @@ const NewInvoice: React.FC = () => {
   const subtotal = items.reduce((sum, item) => sum + item.total, 0);
   const tax = subtotal * 0.1;
   const total = subtotal + tax;
+
+  // 請求書を保存する処理
+  const handleSave = () => {
+    const newInvoice = {
+      invoiceNumber,
+      invoiceDate,
+      paymentDue: dueDate,
+      companyName,
+      customer: clientName,
+      items,
+      totalAmount: total,
+      registrationNumber: '', // 必要なら追加
+    
+      // もし `Invoice` に `calculateTotal` というメソッドがある場合は以下を追加
+      calculateTotal: () => {
+        return total;
+      }
+    };
+
+    // addInvoice を呼び出して請求書を追加
+    addInvoice(newInvoice);
+    navigate('/'); // リストページに戻る
+  };
 
   return (
     <div className="invoice-form">
@@ -151,7 +197,7 @@ const NewInvoice: React.FC = () => {
                     <option value="8%">8%</option>
                   </select>
                 </td>
-                <td>{item.total}円</td>
+                <td>{item.total.toLocaleString()}円</td>  {/* カンマ付きの表示 */}
               </tr>
             ))}
           </tbody>
@@ -160,16 +206,16 @@ const NewInvoice: React.FC = () => {
       </div>
 
       <div className="section totals">
-        <div>小計: {subtotal}円</div>
-        <div>消費税: {tax}円</div>
-        <div>合計: {total}円</div>
+        <div>小計: {subtotal.toLocaleString()}円</div>  {/* 小計にカンマ追加 */}
+        <div>消費税: {tax.toLocaleString()}円</div>  {/* 消費税にカンマ追加 */}
+        <div>合計: {total.toLocaleString()}円</div>  {/* 合計にカンマ追加 */}
       </div>
       
       {/* ここに「戻る」ボタンを追加 */}
       <div className="section buttons">
       <button className="back-btn" onClick={() => navigate(-1)}>戻る</button> {/* ← 追加 */}
         <button className="cancel-btn">キャンセル</button>
-        <button className="save-btn">保存する</button>
+        <button className="save-btn" onClick={handleSave}>保存する</button>
       </div>
     </div>
   );
