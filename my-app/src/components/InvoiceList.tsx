@@ -6,7 +6,7 @@ import Modal from './Modal';
 import { Invoice } from '../models/InvoiceModel';  // Invoice型をインポート
 
 function InvoiceList() {
-  const { invoices } = useContext(InvoiceContext) || { invoices: [] };  // Contextからデータを取得
+  const { invoices, deleteInvoice } = useContext(InvoiceContext) || { invoices: [], deleteInvoice: () => {} };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);  // Invoice型を指定
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,6 +46,14 @@ function InvoiceList() {
   // モーダルを閉じる
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  // 削除処理を実行する関数
+  const handleConfirmDelete = () => {
+    if (selectedInvoice) {
+      deleteInvoice(selectedInvoice.invoiceNumber);  // deleteInvoiceを呼び出して請求書を削除
+      setIsModalOpen(false);  // モーダルを閉じる
+    }
   };
 
   return (
@@ -135,6 +143,7 @@ function InvoiceList() {
           invoiceNumber={selectedInvoice?.invoiceNumber ?? ''}
           clientName={selectedInvoice?.companyName ?? ''}
           onClose={handleCloseModal}
+          onDeleteConfirm={handleConfirmDelete} // コメント部分が修正されました
         />
       )}
     </div>

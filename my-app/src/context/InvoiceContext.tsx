@@ -6,7 +6,9 @@ import { Invoice } from '../models/InvoiceModel'; // Invoiceモデルをイン�
 // コンテキストの型定義
 type InvoiceContextType = {
   invoices: Invoice[];
+  addInvoice: (newInvoice: Invoice) => void;  // addInvoice を追加
   updateInvoice: (id: string, updatedInvoice: Invoice) => void;
+  deleteInvoice: (id: string) => void;  // 削除用関数を追加
 };
 
 // InvoiceContextの作成
@@ -16,6 +18,11 @@ export const InvoiceContext = createContext<InvoiceContextType | undefined>(unde
 export const InvoiceProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [invoiceData, setInvoiceData] = useState<Invoice[]>(initialInvoices);  // 仮データを初期値として設定
 
+  // 請求書を追加する関数
+  const addInvoice = (newInvoice: Invoice) => {
+    setInvoiceData((prevInvoices) => [...prevInvoices, newInvoice]);
+  };
+  
   // 請求書を更新する関数
   const updateInvoice = (id: string, updatedInvoice: Invoice) => {
     setInvoiceData((prevInvoices) =>
@@ -25,8 +32,16 @@ export const InvoiceProvider: React.FC<{ children: ReactNode }> = ({ children })
     );
   };
 
+  // 請求書を削除する関数
+  const deleteInvoice = (id: string) => {
+    setInvoiceData((prevInvoices) =>
+      prevInvoices.filter((invoice) => invoice.invoiceNumber !== id)
+    );
+  };
+  
+  // InvoiceContext.Provider の value に addInvoice を渡す
   return (
-    <InvoiceContext.Provider value={{ invoices: invoiceData, updateInvoice }}>
+    <InvoiceContext.Provider value={{ invoices: invoiceData, addInvoice, updateInvoice, deleteInvoice }}>
       {children}
     </InvoiceContext.Provider>
   );
