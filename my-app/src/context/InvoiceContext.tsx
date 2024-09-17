@@ -33,9 +33,9 @@ export const InvoiceProvider: React.FC<{ children: ReactNode }> = ({ children })
   };
 
   // 請求書を削除する関数
-  const deleteInvoice = (id: string) => {
-    setInvoiceData((prevInvoices) =>
-      prevInvoices.filter((invoice) => invoice.invoiceNumber !== id)
+  const deleteInvoice = (invoiceNumber: string) => {
+    setInvoiceData(prevInvoices =>
+      prevInvoices.filter(invoice => invoice.invoiceNumber !== invoiceNumber)
     );
   };
   

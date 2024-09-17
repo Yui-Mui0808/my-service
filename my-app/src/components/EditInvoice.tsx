@@ -18,6 +18,11 @@ const EditInvoice: React.FC = () => {
     { name: '', quantity: 1, unit: '', unitPrice: 0, taxRate: '10%', total: 0 }
   ]);
 
+  const [subtotal, setSubtotal] = useState(0);  // 小計を保持するstate
+  const [tax, setTax] = useState(0);            // 消費税を保持するstate
+  const [total, setTotal] = useState(0);        // 合計金額を保持するstate
+
+
   useEffect(() => {
     const savedInvoice = invoices.find((invoice) => invoice.invoiceNumber === id);
     if (savedInvoice) {
@@ -27,8 +32,27 @@ const EditInvoice: React.FC = () => {
       setCompanyName(savedInvoice.companyName);
       setClientName(savedInvoice.customer);
       setItems(savedInvoice.items);
-    }
-  }, [id, invoices]);
+
+      // 各アイテムの合計金額を計算して反映
+    const updatedItems = savedInvoice.items.map((item) => {
+      const total = item.quantity * item.unitPrice; // 合計を計算
+      return { ...item, total }; // 合計金額をセット
+    });
+
+    setItems(updatedItems);
+
+    // 小計・消費税・合計を計算
+    const calculatedSubtotal = updatedItems.reduce((sum, item) => sum + item.total, 0);
+    const calculatedTaxRate = updatedItems.some(item => item.taxRate === '8%') ? 0.08 : 0.10;
+    const calculatedTax = calculatedSubtotal * calculatedTaxRate;
+    const calculatedTotal = calculatedSubtotal + calculatedTax;
+
+    // 計算結果をstateに反映
+    setSubtotal(calculatedSubtotal);
+    setTax(calculatedTax);
+    setTotal(calculatedTotal);
+  }
+}, [id, invoices]);
 
   const addItem = () => {
     setItems([...items, { name: '', quantity: 1, unit: '', unitPrice: 0, taxRate: '10%', total: 0 }]);
@@ -45,13 +69,19 @@ const EditInvoice: React.FC = () => {
   
     // 合計金額を再計算
     updatedItems[index].total = updatedItems[index].quantity * updatedItems[index].unitPrice;
-  
     setItems(updatedItems);
-  };
 
-  const subtotal = items.reduce((sum, item) => sum + item.total, 0);
-  const tax = subtotal * 0.1;
-  const total = subtotal + tax;
+    // 再計算
+  const calculatedSubtotal = updatedItems.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
+  const calculatedTaxRate = updatedItems.some(item => item.taxRate === '8%') ? 0.08 : 0.10;
+  const calculatedTax = calculatedSubtotal * calculatedTaxRate;
+  const calculatedTotal = calculatedSubtotal + calculatedTax;
+
+  // stateに反映
+  setSubtotal(calculatedSubtotal);
+  setTax(calculatedTax);
+  setTotal(calculatedTotal);
+};
 
   const handleSave = () => {
     const updatedInvoice = new Invoice(
@@ -70,6 +100,9 @@ const EditInvoice: React.FC = () => {
 
   return (
     <div className="invoice-container">
+      {/* ここに「請求書の編集」タイトルを追加 */}
+    <h1>請求書の編集</h1>
+
       <div className="top-container">
         <div className="left-container">
           <div className="form-group">

@@ -13,128 +13,77 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
 }
 
-/* テーブル形式で表示 */
-.invoice-details-table {
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+/* 請求書基本情報テーブル */
+.invoice-info-table {
   width: 100%;
-  border-collapse: collapse; /* テーブルのボーダーを一体化 */
+  border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-.invoice-details-table th, .invoice-details-table td {
+.invoice-info-table th, .invoice-info-table td {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+}
+
+.invoice-info-table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
   text-align: left;
+  width: 150px; /* ← 左側の項目の幅を固定 */
 }
 
-.invoice-details-table th {
-  background-color: #f8f8f8; /* ヘッダーの背景色を薄いグレーに */
-  font-weight: bold;
-  width: 150px; /* 左側の項目名の列の幅を固定 */
+.invoice-info-table td {
+  text-align: left;
+  width: calc(100% - 150px); /* ← 右側の値の幅を調整 */
 }
 
-.invoice-details-table td {
-  background-color: white; /* ヘッダー以外のセルの背景を白に */
-}
-
-.invoice-details-table td {
-  text-align: left; /* 値の部分を左揃えに */
-}
-
-/* 項目リストのデザイン */
-.invoice-item-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.invoice-item-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-/* 合計金額のデザイン */
-.invoice-total {
-  font-weight: bold;
-  font-size: 18px;
-  text-align: right; /* 合計金額を右揃え */
-  margin-top: 20px;
-}
-
-/* タイトルのデザインを強調 */
-.invoice-details-container h2 {
-  font-size: 24px;             /* 大きな文字サイズ */
-  margin-bottom: 10px;         /* タイトルの下に余白 */
-  border-bottom: 2px solid #333; /* タイトル下に太めのボーダーを追加 */
-  padding-bottom: 5px;         /* タイトルとボーダーの間に少し余白 */
-  text-align: left;            /* タイトルを左揃えにする */
-}
-
-/* 各項目のデザイン */
-.invoice-details-container p {
-  margin: 8px 0;               /* 各項目の上下に余白 */
-  font-size: 16px;             /* 文字サイズを統一 */
-}
-
-/* 項目リストのデザイン */
-.invoice-item-list {
-  list-style-type: none;        /* デフォルトの箇条書きマーカーを削除 */
-  padding: 0;                   /* 内側の余白をなくす */
-}
-
-.invoice-item-list li {
-  padding: 10px;                /* 各項目の上下に余白 */
-  border-bottom: 1px solid #ddd; /* 項目間にボーダーを追加 */
-}
-
-/* 項目リストの金額にカンマを追加 */
-.invoice-item-list li .amount, .invoice-item-list li .tax {
-  font-weight: bold;
-}
-
-/* 合計金額のデザイン */
-.invoice-total {
-  font-weight: bold;            /* 太字にする */
-  font-size: 18px;              /* 文字サイズを少し大きく */
-  margin-top: 10px;             /* 上に余白を追加 */
-  text-align: right;            /* 合計金額を右揃えにする */
-}
-
-/* テーブル風のスタイルを追加して請求書詳細情報を整理 */
-.invoice-details {
-  display: table;
+/* 項目リストテーブル */
+.item-list-table {
   width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.item-list-table th, .item-list-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.item-list-table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+/* 合計金額の表示 */
+.total-amount {
+  font-size: 18px;
+  text-align: right;
+  font-weight: bold;
   margin-top: 20px;
 }
 
-.invoice-details p {
-  display: table-row;
+/* 戻るボタンのスタイル */
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.invoice-details p span {
-  display: table-cell;
-  padding: 5px 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.invoice-details p span:first-child {
-  font-weight: bold;
-  width: 200px; /* 左側の項目名の幅を固定 */
-}
-
-/* 請求書詳細テーブルのヘッダー部分の色を薄いグレーに変更 */
-.invoice-details-header {
-  background-color: #f0f0f0;
-  font-weight: bold;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ccc;
-}
-
-/* 請求書リストのボタンの間に余白を追加 */
-.edit-btn, .details-btn, .delete-btn {
-  margin-bottom: 5px;  /* ボタンの下に余白を追加 */
-}
-
-.edit-btn {
-  margin-right: 5px;   /* 編集ボタンと削除ボタンの間に横の余白を追加 */
+.back-btn:hover {
+  background-color: #0056b3;
 }
