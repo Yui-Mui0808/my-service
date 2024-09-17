@@ -52,6 +52,7 @@ function InvoiceList() {
   const handleConfirmDelete = () => {
     if (selectedInvoice) {
       deleteInvoice(selectedInvoice.invoiceNumber);  // deleteInvoiceを呼び出して請求書を削除
+      setFilteredInvoices(filteredInvoices.filter(invoice => invoice.invoiceNumber !== selectedInvoice.invoiceNumber));  // 削除後にリストを更新
       setIsModalOpen(false);  // モーダルを閉じる
     }
   };

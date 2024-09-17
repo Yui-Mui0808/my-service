@@ -64,13 +64,23 @@ const NewInvoice: React.FC = () => {
       updatedItems[index].total = updatedItems[index].quantity * updatedItems[index].unitPrice;
     }
 
+    // 税率に応じた計算を反映
+    const taxRate = updatedItems[index].taxRate;
+    const taxMultiplier = taxRate === '8%' ? 0.08 : 0.1;  // 8% または 10%を適用
+    updatedItems[index].total = updatedItems[index].quantity * updatedItems[index].unitPrice * (1 + taxMultiplier);
+
     setItems(updatedItems as Item[]);
   };
 
-  // 小計・消費税・合計の計算
-  const subtotal = items.reduce((sum, item) => sum + item.total, 0);
-  const tax = subtotal * 0.1;
-  const total = subtotal + tax;
+  // 小計を個数×単価の合計に修正
+const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+
+// 消費税の計算
+const taxRate = items.some(item => item.taxRate === '8%') ? 0.08 : 0.10;  // 各商品に対して税率を確認
+const tax = subtotal * taxRate;
+
+// 合計金額の計算
+const total = subtotal + tax;
 
   // 請求書を保存する処理
   const handleSave = () => {
