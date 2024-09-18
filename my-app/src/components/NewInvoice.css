@@ -69,7 +69,7 @@ th {
 
 /* 戻るボタンのスタイルを追加 */
 .back-btn {
-  padding: 10px 20px;
+  padding: 8px 13px;
   background-color: #007bff; /* 青色に設定 */
   color: white;
   border: none;
@@ -96,10 +96,15 @@ th {
 }
 
 .cancel-btn, .save-btn {
-  padding: 10px 20px;
+  padding: 8px 13px;  /* ボタンの内側の余白を調整 */
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 15px;  /* フォントサイズを少し小さく */
+  height: 36px;  /* 高さを固定 */
+  line-height: 1.2;  /* 行の高さを調整 */
+  box-sizing: border-box;  /* paddingやborderが含まれるようにする */
+  flex-shrink: 0;  /* flexによる影響を防ぐ */
 }
 
 .cancel-btn {
