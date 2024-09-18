@@ -124,6 +124,7 @@ const EditInvoice: React.FC = () => {
               value={invoiceNumber}
               onChange={(e) => setInvoiceNumber(e.target.value)}
               placeholder="請求書番号"
+              disabled // ← ここを追加
             />
           </div>
           <div className="form-group">
