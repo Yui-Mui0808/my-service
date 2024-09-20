@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // ← useNavigate をインポート
 import { InvoiceContext } from '../context/InvoiceContext';
+import pdfMake from 'pdfmake/build/pdfmake';  // 追加
+import pdfFonts from 'pdfmake/build/vfs_fonts';  // 追加
 import './InvoiceDetails.css';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;  // フォントをセット
 
 const InvoiceDetails: React.FC = () => {
   const { invoiceNumber } = useParams<{ invoiceNumber: string }>();
@@ -14,6 +18,32 @@ const InvoiceDetails: React.FC = () => {
   if (!selectedInvoice) {
     return <p>該当する請求書が見つかりません。</p>;
   }
+
+  // PDFを生成する関数
+  const generatePDF = () => {
+    const docDefinition = {
+      content: [
+        { text: '請求書', style: 'header' },
+        `請求書番号: ${selectedInvoice.invoiceNumber}`,
+        `会社名: ${selectedInvoice.companyName}`,
+        `請求日: ${selectedInvoice.invoiceDate}`,
+        `支払期限: ${selectedInvoice.paymentDue}`,
+        '項目リスト',
+        ...selectedInvoice.items.map((item, index) => (
+          `${index + 1}. ${item.name}: ${item.total.toLocaleString()}円 (税率: ${item.taxRate})`
+        )),
+        `合計金額: ${selectedInvoice.totalAmount.toLocaleString()}円`
+      ],
+      styles: {
+        header: { fontSize: 18, bold: true },
+      },
+      defaultStyle: {
+        font: 'Roboto'
+      }
+    };
+
+    pdfMake.createPdf(docDefinition).open();  // PDFを新しいタブで表示
+  };
 
   return (
     <div className="invoice-details-container">
@@ -73,7 +103,10 @@ const InvoiceDetails: React.FC = () => {
       </div>
 
       {/* 戻るボタンを追加 */}
-      <button className="back-btn" onClick={() => navigate('/')}>戻る</button>  {/* 修正済み */}
+      <button className="back-btn" onClick={() => navigate('/')}>戻る</button>
+
+      {/* PDF生成ボタン */}
+      <button className="pdf-btn" onClick={generatePDF}>PDF生成</button>
     </div>
   );
 };

@@ -87,3 +87,21 @@ h2 {
 .back-btn:hover {
   background-color: #0056b3;
 }
+
+/* PDF生成ボタンのスタイル */
+.pdf-btn {
+  background-color: #dc3545; /* 赤色に設定 */
+  color: white; /* 文字色を白に */
+  padding: 10px 20px; /* ボタンを大きくするために余白を増やす */
+  font-size: 16px; /* 文字サイズを少し大きく */
+  border: none; /* 枠線をなしに */
+  border-radius: 4px; /* 角を少し丸く */
+  cursor: pointer; /* カーソルをポインタに */
+  margin-left: 10px; /* 戻るボタンとの間に余白を追加 */
+}
+
+/* ホバー時の色を少し濃く */
+.pdf-btn:hover {
+  background-color: #c82333; /* ホバー時に濃い赤に変更 */
+}
+
