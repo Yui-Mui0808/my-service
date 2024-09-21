@@ -24,6 +24,24 @@ const NewInvoice: React.FC = () => {
 
   const navigate = useNavigate();  // ← ここに追加
 
+  // モーダル表示状態管理
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  // キャンセル通知表示管理
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleCancel = () => {
+    setShowCancelModal(false);
+    setShowAlert(true); // キャンセル通知を表示
+    setTimeout(() => {
+      setShowAlert(false);
+      navigate('/'); // キャンセル後にリストページに戻る
+    }, 3000); // 3秒間通知を表示してからリダイレクト
+  };
+
+  const handleContinue = () => {
+    setShowCancelModal(false); // モーダルを閉じる
+  };
+
   // 最新の請求書番号を基に次の請求書番号を生成する関数
   const generateInvoiceNumber = () => {
     if (invoices.length === 0) {
@@ -108,6 +126,8 @@ const total = subtotal + tax;
   return (
     <div className="invoice-form">
       <h1>請求書の新規作成</h1>
+
+      {showAlert && <div className="alert-message">キャンセルしました</div>} {/* キャンセル通知 */}
 
       <div className="top-container">
         <div className="left-container">
@@ -221,12 +241,24 @@ const total = subtotal + tax;
         <div>合計: {total.toLocaleString()}円</div>  {/* 合計にカンマ追加 */}
       </div>
       
-      {/* ここに「戻る」ボタンを追加 */}
       <div className="section buttons">
-      <button className="back-btn" onClick={() => navigate(-1)}>戻る</button> {/* ← 追加 */}
-        <button className="cancel-btn">キャンセル</button>
+        <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
+        <button className="cancel-btn" onClick={() => setShowCancelModal(true)}>キャンセル</button> {/* モーダル表示 */}
         <button className="save-btn" onClick={handleSave}>保存する</button>
       </div>
+            
+      {/* キャンセル確認モーダル */}
+      {showCancelModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p>請求書作成をキャンセルしますか？</p>
+            <div className="modal-buttons">
+              <button className="cancel-confirm-btn" onClick={handleCancel}>キャンセルする</button>
+              <button className="continue-btn" onClick={handleContinue}>作成を続ける</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

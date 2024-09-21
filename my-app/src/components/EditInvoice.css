@@ -1,0 +1,59 @@
+/* Modalのスタイル */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+  }
+  
+  /* モーダル内のボタン全体を管理するクラス */
+  .modal-buttons {
+    display: flex;
+    justify-content: center;  /* ボタンを中央に配置 */
+    gap: 5px;  /* ボタン間の余白を5pxに減らす */
+  }
+  
+  .cancel-confirm-btn {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center; /* テキストを中央揃えにする */
+    padding-left: 15px; /* 左側に余白を設定して、文言を少し左に寄せる */
+  }
+  
+  .continue-btn {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .alert-message {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+  

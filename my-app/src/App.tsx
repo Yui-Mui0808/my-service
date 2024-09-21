@@ -6,6 +6,7 @@ import NewInvoice from './components/NewInvoice';
 import EditInvoice from './components/EditInvoice';
 import InvoiceDetails from './components/InvoiceDetails';
 import { InvoiceProvider } from './context/InvoiceContext'; // InvoiceProviderをインポート
+import './styles.css';
 
 const App: React.FC = () => {
   return (
