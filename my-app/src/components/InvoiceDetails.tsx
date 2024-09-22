@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // ← useNavigate をインポート
 import { InvoiceContext } from '../context/InvoiceContext';
 import './InvoiceDetails.css';
+import pdfFonts from '../fonts/vfs_fonts';
 
 // 必要なモジュールのインポート（requireを使用）
 const pdfMake = require('pdfmake/build/pdfmake');
-const pdfFonts = require('pdfmake/build/vfs_fonts');
 
 // フォント設定
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs = pdfFonts;
 
 // フォント設定
 pdfMake.fonts = {
