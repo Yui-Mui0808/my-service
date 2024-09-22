@@ -1,5 +1,13 @@
 /* styles.css */
 
+@font-face {
+    font-family: 'Noto Sans JP';
+    src: url('./fonts/NotoSansJP-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
 /* 請求書全体のスタイル */
 .invoice {
     border: 1px solid #ddd;
@@ -67,3 +75,8 @@
 .invoice-table .item-amount {
     text-align: right;
 }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './NewInvoice.css';
+import './EditInvoice.css';
 import { InvoiceContext } from '../context/InvoiceContext';
 import { Invoice, InvoiceItem } from '../models/InvoiceModel';
 
@@ -21,6 +21,10 @@ const EditInvoice: React.FC = () => {
   const [subtotal, setSubtotal] = useState(0);  // 小計を保持するstate
   const [tax, setTax] = useState(0);            // 消費税を保持するstate
   const [total, setTotal] = useState(0);        // 合計金額を保持するstate
+
+  // キャンセルモーダル表示用のstateを追加
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
 
   useEffect(() => {
@@ -98,8 +102,27 @@ const EditInvoice: React.FC = () => {
     navigate('/');
   };
 
+  // キャンセル処理とモーダル表示処理
+  const handleCancel = () => {
+    setShowCancelModal(false);  // モーダルを閉じる
+    setShowAlert(true);         // キャンセル通知を表示
+  
+    // 3秒後に通知を非表示にし、リストページにリダイレクトする
+    setTimeout(() => {
+      setShowAlert(false);      // 通知を非表示
+      navigate('/');            // リストページに戻る
+    }, 3000);  // 3秒後に実行
+  };
+
+  const handleContinue = () => {
+    setShowCancelModal(false); // モーダルを閉じる
+  };
+
   return (
     <div className="invoice-container">
+      {/* キャンセル通知の表示。showAlertがtrueなら通知を表示 */}
+      {showAlert && <div className="alert-message">キャンセルしました</div>}  {/* キャンセル通知 */}
+
       {/* ここに「請求書の編集」タイトルを追加 */}
     <h1>請求書の編集</h1>
 
@@ -227,9 +250,23 @@ const EditInvoice: React.FC = () => {
 
       <div className="section buttons">
         <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
-        <button className="cancel-btn">キャンセル</button>
+        {/* キャンセルボタンにモーダル表示処理を追加 */}
+        <button className="cancel-btn" onClick={() => setShowCancelModal(true)}>キャンセル</button>
         <button className="save-btn" onClick={handleSave}>保存する</button>
       </div>
+
+      {/* キャンセル確認モーダル */}
+      {showCancelModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p>請求書作成をキャンセルしますか？</p>
+            <div className="modal-buttons">
+              <button className="cancel-confirm-btn" onClick={handleCancel}>キャンセルする</button>
+              <button className="continue-btn" onClick={handleContinue}>作成を続ける</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

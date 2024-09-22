@@ -40,38 +40,49 @@
   margin-bottom: 15px; /* 下に少し余白を追加 */
 }
 
-/* ボタンのコンテナ */
-.modal-buttons {
-  display: flex;
-  justify-content: flex-end; /* ボタンを右揃え */
-  gap: 10px; /* ボタン同士の間に余白を追加 */
-  margin-top: 20px;
-}
+.modal-buttons button {
+  width: 140px !important; /* 強制的に幅を統一 */
+  padding: 10px 20px !important; /* 強制的にパディングも統一 */
+  font-size: 16px !important;
+  border-radius: 4px !important;
+  text-align: center; /* テキストを中央揃え */
+  display: inline-block;
+  }
+
 
 /* 削除ボタン */
 .delete-confirm-btn {
-  background-color: #dc3545; /* 赤色 */
-  color: white; /* 文字を白に */
+  background-color: #dc3545;
+  color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 20px; /* パディングを削除ボタンにも統一 */
   cursor: pointer;
   border-radius: 4px;
 }
 
-.delete-button:hover {
+.delete-confirm-btn:hover {
   background-color: #d32f2f;
 }
 
-/* キャンセルボタン */
 .cancel-btn {
-  background-color: #f0f0f0; /* 薄いグレー */
-  color: #333; /* 濃いグレー */
+  background-color: #f0f0f0; /* 背景色 */
+  color: #333; /* 文字色 */
   border: none;
-  padding: 10px 20px;
+  padding: 15px 20px; /* パディングで高さを調整 */
   cursor: pointer;
   border-radius: 4px;
+  height: auto; /* 高さを自動にしつつ */
+  min-height: 50px; /* 最低の高さを設定 */
 }
 
-.cancel-button:hover {
+.cancel-btn:hover {
   background-color: #dcdcdc;
 }
+
+/* ボタン間隔 */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* ボタンの間に10pxの余白を設定 */
+}
+

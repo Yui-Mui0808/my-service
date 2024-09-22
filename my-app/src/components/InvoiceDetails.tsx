@@ -1,11 +1,22 @@
 import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // ← useNavigate をインポート
 import { InvoiceContext } from '../context/InvoiceContext';
-import pdfMake from 'pdfmake/build/pdfmake';  // 追加
-import pdfFonts from 'pdfmake/build/vfs_fonts';  // 追加
 import './InvoiceDetails.css';
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;  // フォントをセット
+// 必要なモジュールのインポート（requireを使用）
+const pdfMake = require('pdfmake/build/pdfmake');
+const pdfFonts = require('pdfmake/build/vfs_fonts');
+
+// フォント設定
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+// フォント設定
+pdfMake.fonts = {
+  NotoSansJP: {
+    normal: 'NotoSansJP-Regular.ttf',
+    bold: 'NotoSansJP-Bold.ttf'  // セミコロンを追加
+  },
+};
 
 const InvoiceDetails: React.FC = () => {
   const { invoiceNumber } = useParams<{ invoiceNumber: string }>();
@@ -38,11 +49,11 @@ const InvoiceDetails: React.FC = () => {
         header: { fontSize: 18, bold: true },
       },
       defaultStyle: {
-        font: 'Roboto'
+        font: 'NotoSansJP'  // 日本語フォントを指定
       }
     };
 
-    pdfMake.createPdf(docDefinition).open();  // PDFを新しいタブで表示
+    pdfMake.createPdf(docDefinition).open();  // PDF を生成し表示
   };
 
   return (
