@@ -1,27 +1,19 @@
 // src/App.tsx
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import InvoiceList from './components/InvoiceList';
-import NewInvoice from './components/NewInvoice';
-import EditInvoice from './components/EditInvoice';
-import InvoiceDetails from './components/InvoiceDetails';
+import { BrowserRouter as Router } from 'react-router-dom'; // ルートを定義するためにRouterをインポート
 import { InvoiceProvider } from './context/InvoiceContext'; // InvoiceProviderをインポート
-import './styles.css';
+import AuthRoutesWrapper from './components/AuthRoutesWrapper'; // 認証状態を監視するコンポーネント
+import './styles.css'; // スタイルシートをインポート
 
 const App: React.FC = () => {
   return (
-    <InvoiceProvider>  {/* アプリ全体をProviderでラップ */}
+    <InvoiceProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={<InvoiceList />} />
-          <Route path="/new-invoice" element={<NewInvoice />} />
-          <Route path="/edit-invoice/:id" element={<EditInvoice />} />
-          <Route path="/invoice-details/:invoiceNumber" element={<InvoiceDetails />} />
-        </Routes>
+        {/* 認証状態を監視するラップコンポーネント */}
+        <AuthRoutesWrapper />
       </Router>
     </InvoiceProvider>
   );
 };
 
 export default App;
-

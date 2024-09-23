@@ -31,3 +31,11 @@
   min-height: 100vh;
   text-align: center;
 }
+
+/* src/styles.css */
+body {
+  background-color: #f0f0f0; /* 背景色を薄いグレーに設定 */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}

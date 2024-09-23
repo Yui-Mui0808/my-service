@@ -1,0 +1,56 @@
+/* 背景を薄いグレーに設定 */
+body {
+    background-color: #f0f0f0;  /* 薄いグレー */
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* ログイン用のコンテナ */
+.login-container {
+    background-color: white;
+    width: 500px; /* コンテナ全体の幅を500pxに拡大 */
+    padding: 30px;
+    margin: 100px auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;  /* コンテンツを中央揃え */
+  }
+
+  /* フォーム全体の中央揃え */
+.login-container form {
+    width: 100%;  /* フォーム全体の幅を100%に指定 */
+  }
+  
+  /* 入力フィールドのスタイル */
+.login-container input {
+    width: 100%;  /* 親コンテナに対して100%の幅を指定 */
+    max-width: 350px;  /* 最大幅を350pxに拡大 */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  /* 各ラベルに下部余白を追加 */
+.login-container label {
+    display: block;
+    margin-bottom: 5px;  /* ラベルと入力フィールドの間に余白 */
+  }
+  
+  /* ログインボタンのスタイル */
+.login-container button {
+    width: 100%;  /* ボタンの幅も100%に指定 */
+    max-width: 350px;  /* 最大幅を350pxに拡大 */
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .login-container button:hover {
+    background-color: #0056b3;  /* ボタンのホバー時の色 */
+  }
