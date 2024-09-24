@@ -10,7 +10,7 @@ function InvoiceList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);  // Invoice型を指定
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredInvoices, setFilteredInvoices] = useState(invoices);
+  const [filteredInvoices, setFilteredInvoices] = useState(invoices || []);
   const [searchedInvoice, setSearchedInvoice] = useState<Invoice | null>(null);  // 検索結果の請求書を保存するためのstate
   const navigate = useNavigate();
 
@@ -56,6 +56,8 @@ function InvoiceList() {
       setIsModalOpen(false);  // モーダルを閉じる
     }
   };
+  
+  console.log("請求書リスト: ", invoices); // デバッグ用
 
   return (
     <div className="page-container">

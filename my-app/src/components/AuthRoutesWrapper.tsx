@@ -8,15 +8,16 @@ import EditInvoice from './EditInvoice';
 import InvoiceDetails from './InvoiceDetails';
 import Login from './Login';
 import Dashboard from './Dashboard';
+import app from '../firebaseConfig';
 
 const AuthRoutesWrapper: React.FC = () => {
-  const navigate = useNavigate();
-  const auth = getAuth();
+    const navigate = useNavigate();
+    const auth = getAuth(app); //修正
 
   const [loading, setLoading] = useState(true);  // 初期はローディング状態
 
   useEffect(() => {
-    // 認証状態の変更を監視
+    console.log('onAuthStateChangedを監視しています');
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         console.log('ユーザーがログインしています:', currentUser);
@@ -40,14 +41,15 @@ const AuthRoutesWrapper: React.FC = () => {
     <Routes>
       {/* ログイン画面 */}
       <Route path="/login" element={<Login />} />
-      
       {/* ダッシュボード画面 */}
       <Route path="/dashboard" element={<Dashboard />} />
-      
-      {/* 他のルート */}
+      {/* 請求書リスト */}
       <Route path="/" element={<InvoiceList />} />
+      {/* 新規請求書作成 */}
       <Route path="/new-invoice" element={<NewInvoice />} />
+      {/* 請求書編集 */}
       <Route path="/edit-invoice/:id" element={<EditInvoice />} />
+      {/* 請求書詳細 */}
       <Route path="/invoice-details/:invoiceNumber" element={<InvoiceDetails />} />
     </Routes>
   );
