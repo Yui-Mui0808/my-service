@@ -21,14 +21,17 @@ const AuthRoutesWrapper: React.FC = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         console.log('ユーザーがログインしています:', currentUser);
-        navigate('/dashboard');
+        // 現在のページが /dashboard でない場合のみ遷移
+        if (window.location.pathname === '/login') {
+          navigate('/dashboard');
+        }
       } else {
         console.log('ユーザーがログインしていません');
         navigate('/login');
       }
       setLoading(false);  // 認証確認が終わったらローディング終了
     });
-
+  
     return () => unsubscribe();
   }, [auth, navigate]);
 

@@ -5,7 +5,20 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 20px; /* 上下左右に余白を追加 */
+    margin: 0 auto;
   }
+
+  /* ダッシュボードのタイトルを左揃えにする */
+.dashboard-title {
+  align-self: flex-start; /* 親要素に対して左揃え */
+  margin-left: 2rem;      /* 左に余白を追加して位置を調整 */
+}
+
+/* 中央配置するためのメインコンテンツ */
+.dashboard-main {
+  text-align: center;
+}
   
   .dashboard-header {
     display: flex;
@@ -30,21 +43,28 @@
   }
   
   .dashboard-main {
-    flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: calc(100vh - 100px); /* 画面全体に合わせて中央揃え */
   }
   
-  .invoice-list-button {
-    padding: 15px 30px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
+  /* ボタンのスタイルを修正して、中央に配置 */
+.invoice-list-button {
+  background-color: #28a745; /* 緑色 */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.invoice-list-button:hover {
+  background-color: #218838; /* ホバー時の色 */
+}
   
   /* モーダルのスタイル */
   .modal {

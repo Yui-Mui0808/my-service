@@ -4,6 +4,7 @@ import './InvoiceList.css';
 import { InvoiceContext } from '../context/InvoiceContext';  // コンテキストをインポート
 import Modal from './Modal';
 import { Invoice } from '../models/InvoiceModel';  // Invoice型をインポート
+import Header from './Header';  // 共通ヘッダーをインポート
 
 function InvoiceList() {
   const { invoices, deleteInvoice } = useContext(InvoiceContext) || { invoices: [], deleteInvoice: () => {} };
@@ -56,11 +57,12 @@ function InvoiceList() {
       setIsModalOpen(false);  // モーダルを閉じる
     }
   };
-  
-  console.log("請求書リスト: ", invoices); // デバッグ用
+
+  console.log("請求書リストページが表示されました");
 
   return (
     <div className="page-container">
+      <Header /> {/* ヘッダーを追加 */}
       <h1>請求書リスト</h1>
       <div className="container">
         {/* 検索ボックスとボタン */}

@@ -1,0 +1,62 @@
+/* src/components/Header.css */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* 共通スタイル */
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 色の変化をスムーズに */
+  }
+  
+  /* ログアウトボタンのスタイル */
+.logout-button {
+    background-color: #007BFF;  /* 青色 */
+    color: white;
+  }
+  
+  /* 戻るボタンのスタイル */
+  .back-button {
+    background-color: #28a745;  /* 緑色 */
+    color: white;
+    margin-right: 10px; /* ボタン間の余白 */
+  }
+  
+  /* ホバー時に色を濃くする */
+  .logout-button:hover {
+    background-color: #0056b3;  /* 濃い青色 */
+  }
+  
+  .back-button:hover {
+    background-color: #218838;  /* 濃い緑色 */
+  }
+
+
+  /* モーダル用のスタイル */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
