@@ -1,0 +1,78 @@
+/* サインアップフォーム全体のスタイル */
+.signup-container {
+    width: 100%;  /* コンテナ自体の幅を100%にする */
+    max-width: 600px !important;
+    margin: 80px auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+/* タイトル */
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    width: 100%;
+}
+  
+/* ラベル */
+.signup-container label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100%;
+}
+
+/* 入力フィールドとボタンの共通スタイル */
+.signup-container input, 
+.signup-container button {
+    width: 100% !important;  
+    max-width: 500px !important; /* 重要度を上げて適用 */
+    box-sizing: border-box !important;  /* box-sizingの確認 */
+    padding: 10px; /* 内側の余白を設定 */
+}
+
+/* 入力フィールド */
+.signup-container input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* 登録ボタン */
+.signup-container button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-container button:hover {
+    background-color: #218838;
+}
+
+/* リンク */
+.signup-container p {
+    text-align: center;
+}
+
+.signup-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-container a:hover {
+    text-decoration: underline;
+}
