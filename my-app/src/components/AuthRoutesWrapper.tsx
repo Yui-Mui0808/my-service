@@ -11,49 +11,39 @@ import Signup from './Signup'; // Signupコンポーネントをインポート
 import Dashboard from './Dashboard';
 import app from '../firebaseConfig'; // Firebase設定をインポート
 
-// コンポーネントの型
-interface AuthRoutesWrapperProps {
-  children?: React.ReactNode;
-}
-
-const AuthRoutesWrapper: React.FC<AuthRoutesWrapperProps> = () => {
+const AuthRoutesWrapper: React.FC = () => {
   const navigate = useNavigate();
   const auth = getAuth(app); // Firebase Auth を初期化
 
-  // ローディング状態の管理
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // ローディング状態の管理
 
   // ユーザーの認証状態を監視する useEffect
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        // ログインしているユーザーが '/login' または '/signup' ページにアクセスしている場合
+        // ログインしている場合
         if (window.location.pathname === '/login' || window.location.pathname === '/signup') {
-          // 何もしない (ページ遷移を防ぐ)
-          return;
-        } else {
-          // それ以外のページであればダッシュボードにリダイレクト
+          // ログインしている場合はダッシュボードへリダイレクト
           navigate('/dashboard');
         }
+        // それ以外のページにアクセスしている場合は何もしない
       } else {
-        // ユーザーがログインしていない場合
+        // ログインしていない場合、/signup 以外のページにいたらログインページへリダイレクト
         if (window.location.pathname !== '/signup') {
-          // 新規登録ページでない場合、ログインページにリダイレクト
           navigate('/login');
         }
       }
-      // ローディング状態を解除
-      setLoading(false);
+      setLoading(false);  // 認証確認が終わったらローディング状態を解除
     });
 
-    // クリーンアップ関数
-    return () => unsubscribe();
+    return () => unsubscribe();  // クリーンアップ関数
   }, [auth, navigate]);
 
   // ローディング中の表示
   if (loading) {
     return <div>Loading...</div>;
   }
+
 
   // ルート設定
   return (
