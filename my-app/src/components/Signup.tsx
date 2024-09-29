@@ -16,7 +16,9 @@ const Signup: React.FC = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log('ユーザー登録成功:', user);
-        navigate('/dashboard');  // 登録後にダッシュボードへ遷移
+        
+        // ダッシュボードに遷移するとき、登録完了フラグを渡す
+        navigate('/dashboard', { state: { isSignupComplete: true } });
       })
       .catch((error) => {
         console.error('ユーザー登録失敗:', error);
