@@ -1,29 +1,27 @@
-// src/components/Login.tsx
+
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';  // useNavigateをインポート
+import { useNavigate, Link } from 'react-router-dom'; 
 import './Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const auth = getAuth();
-  const navigate = useNavigate();  // useNavigateを使用
+  const navigate = useNavigate(); 
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('ログイン処理が開始されました'); // ログインが開始されたか確認するログ
+    console.log('ログイン処理が開始されました'); 
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('ログイン成功:', user);  // ログイン成功時のログ
-        console.log('ダッシュボードへ遷移します');  // ここで遷移することを確認するログ
-        navigate('/dashboard');  // ログイン成功後にダッシュボードへ遷移
-        console.log('ダッシュボードへの遷移が完了しました');  // 遷移が完了したかを確認
+        console.log('ログイン成功:', user);  
+        navigate('/dashboard');  
       })
       .catch((error) => {
-        console.error('ログイン失敗:', error);  // ログイン失敗時のエラーログ
+        console.error('ログイン失敗:', error);  
       });
   };
 
@@ -51,6 +49,9 @@ const Login: React.FC = () => {
         </div>
         <button type="submit">ログイン</button>
       </form>
+      <p>アカウントをお持ちでないですか？ 
+         <Link to="/signup">新規ユーザー登録はこちら</Link>
+      </p>
     </div>
   );
 };
