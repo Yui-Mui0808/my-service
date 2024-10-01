@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
       {/* 新規ユーザー登録が完了した場合にメッセージを表示 */}
       {isSignupComplete && (
         <div className="signup-complete-message">
-          <p style={{ color: 'green' }}>新規ユーザー登録が完了しました！</p>
+          <p style={{ color: 'green' }}>新規ユーザー登録が完了しました。</p>
         </div>
       )}
 
