@@ -46,13 +46,6 @@
   gap: 10px; /* 検索ボックスとボタンの間に余白を設定 */
 }
 
-/* 検索ボタンを右に配置 */
-.search-field {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* ボタンと検索ボックスの間に余白を追加 */
-}
-
 .search-container input[type="text"] {
   width: 400px; /* 横幅を狭く */
   height: 30px; /* 高さを大きく */
@@ -75,19 +68,6 @@
   width: 200px; /* 幅を調整 */
   padding: 10px; /* 内側の余白を追加 */
   font-size: 14px;
-}
-
-
-.search-container button {
-  height: 40px !important; /* 検索ボックスと同じ高さにする */
-  background-color: #555 !important;
-  margin-left: 10px !important; /* 検索ボックスの隣にボタンを配置 */
-  color: white !important;
-  border: none !important;
-  padding: 10px 20px !important;
-  font-size: 14px !important;
-  cursor: pointer !important;
-  border-radius: 4px !important;
 }
 
 .search-container div {
@@ -115,6 +95,10 @@
   right: 20px;
   top: 20px;
   margin-top: 20px; /* 上部に余白を追加 */
+}
+
+.new-invoice-btn:hover {
+  background-color: #028317;/* ボタンをホバー時に少し暗く */
 }
 
 /* テーブルセルの背景色を白にする */
@@ -177,6 +161,10 @@
   margin-bottom: 10px; /* 下に余白を追加 */
 }
 
+.edit-btn:hover {
+  background-color: #092fd8;  /* ボタンをホバー時に少し暗く */
+}
+
 .delete-btn {
   background-color: #dc3545;
   color: white;
@@ -185,6 +173,10 @@
   cursor: pointer;
   border-radius: 4px;
   margin-right: 10px;  /* 右側の余白を追加 */
+}
+
+.delete-btn:hover {
+  background-color: #b80101;  /* ボタンをホバー時に少し暗く */
 }
 
 .details-btn {
@@ -280,4 +272,47 @@
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
+}
+
+/* 検索とリセットボタンを並べるコンテナ */
+.button-container {
+  display: flex;
+  flex-direction: row;  /* ボタンを横に並べる */
+  justify-content: flex-end; /* 右下に配置 */
+  gap: 10px; /* ボタンの間に適度なスペース */
+  margin-top: 10px; /* ボタンの上に少し余白を追加 */
+}
+
+/* 検索ボタンのスタイル */
+.search-button {
+  background-color: #39393a;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap; /* 折り返しを防止 */
+  width: auto; /* ボタンの幅を自動調整 */
+}
+
+/* 検索ボタンのホバー時の色変更 */
+.search-button:hover {
+  background-color: #1b1b1b !important; /* 濃いグレー */
+}
+
+/* リセットボタンのスタイル */
+.reset-button {
+  background-color: #d3d3d3; /* 薄いグレー */
+  color: black;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap; /* 折り返しを防止 */
+  width: auto; /* ボタンの幅を自動調整 */
+}
+
+/* リセットボタンのホバー時の色変更 */
+.reset-button:hover {
+  background-color: #a5a4a4 !important; /* ホバー時に濃いグレー */
 }

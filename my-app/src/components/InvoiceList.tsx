@@ -42,6 +42,18 @@ function InvoiceList() {
     }
   };
 
+  // リセットボタンの処理
+  const handleReset = () => {
+    setSearchTerm('');
+    setInvoiceDateFrom('');
+    setInvoiceDateTo('');
+    setPaymentDueFrom('');
+    setPaymentDueTo('');
+    setClientName('');
+    setFilteredInvoices(invoices);  // 全請求書を再表示
+    setSearchedInvoice(null);       // 検索結果をクリア
+  };
+
   const handleDeleteClick = (invoice: Invoice) => {
     setSelectedInvoice(invoice);
     setIsModalOpen(true);
@@ -73,38 +85,36 @@ function InvoiceList() {
       <h1>請求書リスト</h1>
       <div className="container">
         <div className="search-container">
-        <div className="search-field">
-  <label>請求書番号や取引先を検索:</label>
-  <input
-    type="text"
-    placeholder="請求書番号や取引先を検索..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-  />
-  <button onClick={handleSearch}>検索</button> {/* 検索ボタンを右に配置 */}
-</div>
-
+          <div className="search-field">
+            <label>請求書番号や取引先を検索:</label>
+            <input
+              type="text"
+              placeholder="請求書番号や取引先を検索..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
 
           {/* 請求日と支払期限を横並びに */}
           <div className="date-row">
-  <div className="date-container">
-    <label>請求日:</label>
-    <div className="date-range">
-      <input type="date" value={invoiceDateFrom} onChange={(e) => setInvoiceDateFrom(e.target.value)} />
-      <span>～</span>
-      <input type="date" value={invoiceDateTo} onChange={(e) => setInvoiceDateTo(e.target.value)} />
-    </div>
-  </div>
+            <div className="date-container">
+              <label>請求日:</label>
+              <div className="date-range">
+                <input type="date" value={invoiceDateFrom} onChange={(e) => setInvoiceDateFrom(e.target.value)} />
+                <span>～</span>
+                <input type="date" value={invoiceDateTo} onChange={(e) => setInvoiceDateTo(e.target.value)} />
+              </div>
+            </div>
 
-  <div className="date-container">
-    <label>支払期限:</label>
-    <div className="date-range">
-      <input type="date" value={paymentDueFrom} onChange={(e) => setPaymentDueFrom(e.target.value)} />
-      <span>～</span>
-      <input type="date" value={paymentDueTo} onChange={(e) => setPaymentDueTo(e.target.value)} />
-    </div>
-  </div>
-</div>
+            <div className="date-container">
+              <label>支払期限:</label>
+              <div className="date-range">
+                <input type="date" value={paymentDueFrom} onChange={(e) => setPaymentDueFrom(e.target.value)} />
+                <span>～</span>
+                <input type="date" value={paymentDueTo} onChange={(e) => setPaymentDueTo(e.target.value)} />
+              </div>
+            </div>
+          </div>
 
           <div className="client-container">
             <label>取引先:</label>
@@ -116,6 +126,12 @@ function InvoiceList() {
                 </option>
               ))}
             </select>
+          </div>
+
+          {/* ボタンコンテナ */}
+          <div className="button-container">
+            <button className="search-button" onClick={handleSearch}>検索</button>
+            <button className="reset-button" onClick={handleReset}>リセット</button>
           </div>
         </div>
 
