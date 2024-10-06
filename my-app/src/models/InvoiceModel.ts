@@ -20,7 +20,8 @@ export class Invoice {
     public customer: string,
     public items: InvoiceItem[],   // items は InvoiceItem 型の配列
     public totalAmount: number,
-    public registrationNumber: string
+    public registrationNumber: string, // 修正: カンマ追加
+    public isIssued: boolean = false   // 発行済みかどうかのステータスを追加、デフォルトは未発行
   ) {}
 
   // calculateTotal メソッドを定義
@@ -28,3 +29,4 @@ export class Invoice {
     return this.items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   }
 }
+
