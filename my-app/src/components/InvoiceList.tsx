@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './InvoiceList.css';
 import { InvoiceContext } from '../context/InvoiceContext';
-import Modal from './Modal';
+import Modal from './Modal';// モーダルコンポーネントをインポート
 import { Invoice } from '../models/InvoiceModel';
 import Header from './Header';
 
@@ -20,8 +20,13 @@ function InvoiceList() {
   const [paymentDueTo, setPaymentDueTo] = useState('');
   const [clientName, setClientName] = useState('');
 
+  // ステータスフィルタの状態を追加
+  const [isIssuedChecked, setIsIssuedChecked] = useState(false); // 発行済みのチェック
+  const [isNotIssuedChecked, setIsNotIssuedChecked] = useState(false); // 未発行のチェック
+
   const navigate = useNavigate();
 
+  // 検索処理
   const handleSearch = () => {
     const filtered = invoices.filter((invoice) => {
       const matchesText = invoice.invoiceNumber.includes(searchTerm) || invoice.companyName.includes(searchTerm);
@@ -33,16 +38,24 @@ function InvoiceList() {
         (!paymentDueTo || new Date(invoice.paymentDue) <= new Date(paymentDueTo));
       const matchesClient = !clientName || invoice.companyName === clientName;
 
-      return matchesText && matchesInvoiceDate && matchesPaymentDue && matchesClient;
-    });
-    setFilteredInvoices(filtered);
+      // ステータスフィルタの条件を追加
+      const matchesStatus =
+        (!isIssuedChecked && !isNotIssuedChecked) || // 両方のチェックボックスが未選択の場合はすべて表示
+        (isIssuedChecked && invoice.isIssued) ||     // 発行済みがチェックされている場合、発行済みの請求書を表示
+        (isNotIssuedChecked && !invoice.isIssued);   // 未発行がチェックされている場合、未発行の請求書を表示
+
+    // matchesStatus を含めた条件でフィルタリング
+    return matchesText && matchesInvoiceDate && matchesPaymentDue && matchesClient && matchesStatus;
+  });
+
+  setFilteredInvoices(filtered);
 
     if (filtered.length > 0) {
       setSearchedInvoice(filtered[0]);
     }
   };
 
-  // リセットボタンの処理
+  // リセット処理
   const handleReset = () => {
     setSearchTerm('');
     setInvoiceDateFrom('');
@@ -50,15 +63,19 @@ function InvoiceList() {
     setPaymentDueFrom('');
     setPaymentDueTo('');
     setClientName('');
+    setIsIssuedChecked(false); // 発行済みのチェックをリセット
+    setIsNotIssuedChecked(false); // 未発行のチェックをリセット
     setFilteredInvoices(invoices);  // 全請求書を再表示
     setSearchedInvoice(null);       // 検索結果をクリア
   };
-
+  
+  // 削除処理
   const handleDeleteClick = (invoice: Invoice) => {
     setSelectedInvoice(invoice);
     setIsModalOpen(true);
   };
-
+  
+  // 編集処理
   const handleEditClick = (invoiceNumber: string) => {
     navigate(`/edit-invoice/${invoiceNumber}`);
   };
@@ -116,6 +133,29 @@ function InvoiceList() {
             </div>
           </div>
 
+          {/* ステータスフィルタの追加 */}
+          <div className="status-filter">
+            <label>ステータス:</label>
+            <div className="status-checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isNotIssuedChecked}
+                  onChange={() => setIsNotIssuedChecked(!isNotIssuedChecked)}
+                />
+                未発行
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isIssuedChecked}
+                  onChange={() => setIsIssuedChecked(!isIssuedChecked)}
+                />
+                発行済み
+              </label>
+            </div>
+          </div>
+
           <div className="client-container">
             <label>取引先:</label>
             <select value={clientName} onChange={(e) => setClientName(e.target.value)}>
@@ -149,7 +189,8 @@ function InvoiceList() {
             <th>請求日</th>
             <th>支払期限</th>
             <th>合計金額</th>
-            <th>操作</th>
+            <th>ステータス</th> {/* ステータスを追加 */}
+            <th>操作</th> {/* 操作列 */}
           </tr>
         </thead>
         <tbody>
@@ -161,10 +202,15 @@ function InvoiceList() {
               <td>{invoice.invoiceDate}</td>
               <td>{invoice.paymentDue}</td>
               <td>{invoice.totalAmount.toLocaleString()}円</td>
+              <td>{invoice.isIssued ? '発行済み' : '未発行'}</td> {/* 発行済みステータス */}
               <td>
-                <button className="edit-btn" onClick={() => handleEditClick(invoice.invoiceNumber)}>編集</button>
-                <button className="delete-btn" onClick={() => handleDeleteClick(invoice)}>削除</button>
-                <button className="details-btn" onClick={() => handleDetailsClick(invoice.invoiceNumber)}>詳細</button>
+              <div className="button-group">
+                <div className="top-row">
+                  <button className="edit-btn" onClick={() => handleEditClick(invoice.invoiceNumber)}>編集</button>
+                  <button className="delete-btn" onClick={() => handleDeleteClick(invoice)}>削除</button>
+                </div>
+                  <button className="details-btn" onClick={() => handleDetailsClick(invoice.invoiceNumber)}>詳細</button>
+                </div>
               </td>
             </tr>
           ))}

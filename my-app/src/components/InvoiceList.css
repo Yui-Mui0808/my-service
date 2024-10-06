@@ -2,7 +2,7 @@
 .page-container {
   padding: 20px;
   background-color: #f0f0f0;
-  max-width: 1100px; /* 横幅を調整して右側の余白を広げる */
+  max-width: 1250px; /* 横幅を調整して右側の余白を広げる */
   margin: 0 auto; /* 画面中央に配置 */
 }
 
@@ -27,7 +27,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 1200px;
+  max-width: 1250px;
   margin-bottom: 20px;
   box-sizing: border-box;
   gap: 20px; /* 要素間の余白 */
@@ -65,9 +65,10 @@
 .search-container select {
   max-height: 40px; /* プルダウンの縦幅を制限 */
   overflow-y: auto; /* スクロール可能にする */
-  width: 200px; /* 幅を調整 */
+  width: 180px; /* 幅を調整 */
   padding: 10px; /* 内側の余白を追加 */
   font-size: 14px;
+  margin-right: 20px; /* 右側に余白を追加 */
 }
 
 .search-container div {
@@ -101,6 +102,11 @@
   background-color: #028317;/* ボタンをホバー時に少し暗く */
 }
 
+.table-container-wrapper {
+  width: 100%;
+  overflow-x: auto;  /* テーブルが横に長くなる場合にスクロールを追加 */
+}
+
 /* テーブルセルの背景色を白にする */
 .table-container {
   width: 100%;
@@ -113,6 +119,13 @@
   padding: 10px;
   text-align: left;
   border: 1px solid #ddd;
+  white-space: nowrap;  /* テキストの折り返しを防止 */
+}
+
+/* ボタンに余白を追加してコンパクトにする */
+.edit-btn, .delete-btn, .details-btn {
+  padding: 6px 12px;  /* ボタンをコンパクトに */
+  margin-bottom: 5px;  /* 各ボタンの間に少し余白を追加 */
 }
 
 .table-container th {
@@ -126,7 +139,7 @@
 }
 
 .table-container th:nth-child(2), .table-container td:nth-child(2) {
-  width: 10%; /* 請求書番号の列を狭く */
+  width: 15%; /* 請求書番号の列を狭く */
 }
 
 .table-container th:nth-child(3), .table-container td:nth-child(3) {
@@ -134,19 +147,32 @@
 }
 
 .table-container th:nth-child(4), .table-container td:nth-child(4) {
-  width: 10%; /* 請求日の列 */
+  width: 15%; /* 請求日の列 */
 }
 
 .table-container th:nth-child(5), .table-container td:nth-child(5) {
-  width: 10%; /* 支払期限の列 */
+  width: 15%; /* 支払期限の列 */
 }
 
 .table-container th:nth-child(6), .table-container td:nth-child(6) {
-  width: 10%; /* 合計金額の列 */
+  width: 15%; /* 合計金額の列 */
 }
 
 .table-container th:nth-child(7), .table-container td:nth-child(7) {
-  width: 15%; /* 操作の列 */
+  width: 15%;  /* ステータス欄 */
+}
+
+.table-container th:nth-child(8), .table-container td:nth-child(8) {
+  width: 40%; /* 操作の列 */
+}
+
+/* 編集・削除ボタンと詳細ボタンの幅を統一する */
+.edit-btn, .delete-btn, .details-btn {
+  width: 100px; /* 全てのボタンの幅を統一 */
+  padding: 8px 20px; /* ボタンのサイズを均一に */
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 /* 編集・削除ボタン */
@@ -194,7 +220,7 @@
 
 /* テーブル全体の幅を整える */
 .table-container th, .table-container td {
-  padding: 10px;
+  padding: 20px;
   text-align: left;
 }
 
@@ -274,13 +300,13 @@
   gap: 10px !important;
 }
 
-/* 検索とリセットボタンを並べるコンテナ */
+/* 検索ボタンとリセットボタンの調整 */
 .button-container {
   display: flex;
-  flex-direction: row;  /* ボタンを横に並べる */
-  justify-content: flex-end; /* 右下に配置 */
-  gap: 10px; /* ボタンの間に適度なスペース */
-  margin-top: 10px; /* ボタンの上に少し余白を追加 */
+  justify-content: flex-end; /* ボタンを右寄せにする */
+  gap: 10px; /* ボタン間に余白を設定 */
+  margin-right: 0; /* コンテナ内に収めるためマージンを調整 */
+  width: 100%; /* コンテナの幅を100%にする */
 }
 
 /* 検索ボタンのスタイル */
@@ -292,7 +318,7 @@
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap; /* 折り返しを防止 */
-  width: auto; /* ボタンの幅を自動調整 */
+  width: 100px; /* ボタンの幅を固定 */
 }
 
 /* 検索ボタンのホバー時の色変更 */
@@ -309,10 +335,35 @@
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap; /* 折り返しを防止 */
-  width: auto; /* ボタンの幅を自動調整 */
+  width: 100px; /* ボタンの幅を固定 */
 }
 
 /* リセットボタンのホバー時の色変更 */
 .reset-button:hover {
   background-color: #a5a4a4 !important; /* ホバー時に濃いグレー */
+}
+
+.status-checkbox-group {
+  display: flex;
+  gap: 20px;  /* チェックボックス間の余白を調整 */
+}
+
+.status-checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;  /* チェックボックスとラベル間の余白 */
+}
+
+/* ステータスフィルタのスタイル */
+.status-filter {
+  display: flex;
+  flex-direction: row; /* 横並びにする */
+  align-items: center;
+  white-space: nowrap; /* テキストを折り返さない */
+  gap: 10px; /* チェックボックスとテキストの間隔を調整 */
+}
+
+.status-checkbox-group {
+  display: flex;
+  gap: 10px; /* 各チェックボックスとラベルの間隔 */
 }

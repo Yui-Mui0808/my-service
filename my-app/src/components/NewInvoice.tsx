@@ -21,13 +21,13 @@ const NewInvoice: React.FC = () => {
   }
 
   const { invoices, addInvoice } = context;  // invoices を取得
-
   const navigate = useNavigate();  // ← ここに追加
 
   // モーダル表示状態管理
   const [showCancelModal, setShowCancelModal] = useState(false);
-  // キャンセル通知表示管理
-  const [showAlert, setShowAlert] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);  // 保存確認用モーダルの状態管理
+  const [isSaved, setIsSaved] = useState(false);              // 保存完了メッセージの表示用
+  const [showAlert, setShowAlert] = useState(false);          // キャンセル通知表示管理
 
   const handleCancel = () => {
     setShowCancelModal(false);
@@ -40,6 +40,20 @@ const NewInvoice: React.FC = () => {
 
   const handleContinue = () => {
     setShowCancelModal(false); // モーダルを閉じる
+  };
+
+  const handleSaveClick = () => {
+    setShowSaveModal(true);  // 保存確認用モーダルを表示
+  };
+
+  const handleConfirmSave = () => {
+    handleSave();            // 保存処理を実行
+    setShowSaveModal(false);  // 保存モーダルを閉じる
+    setIsSaved(true);         // 保存完了メッセージを表示
+  };
+
+  const handleCancelSave = () => {
+    setShowSaveModal(false);  // モーダルを閉じる
   };
 
   // 最新の請求書番号を基に次の請求書番号を生成する関数
@@ -111,7 +125,7 @@ const total = subtotal + tax;
       items,
       totalAmount: total,
       registrationNumber: '', // 必要なら追加
-    
+      isIssued: false, // ここで未発行状態を追加
       // もし `Invoice` に `calculateTotal` というメソッドがある場合は以下を追加
       calculateTotal: () => {
         return total;
@@ -244,7 +258,7 @@ const total = subtotal + tax;
       <div className="section buttons">
         <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
         <button className="cancel-btn" onClick={() => setShowCancelModal(true)}>キャンセル</button> {/* モーダル表示 */}
-        <button className="save-btn" onClick={handleSave}>保存する</button>
+        <button className="save-btn" onClick={handleSaveClick}>保存する</button>
       </div>
             
       {/* キャンセル確認モーダル */}
@@ -259,6 +273,21 @@ const total = subtotal + tax;
           </div>
         </div>
       )}
+      {/* 保存確認モーダル */}
+      {showSaveModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p>請求書を保存しますか？</p>
+            <div className="modal-buttons">
+              <button className="confirm-btn" onClick={handleConfirmSave}>はい</button>
+              <button className="cancel-btn" onClick={handleCancelSave}>いいえ</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 保存完了メッセージ */}
+      {isSaved && <p style={{ color: 'green' }}>請求書を保存しました。</p>}
     </div>
   );
 };
