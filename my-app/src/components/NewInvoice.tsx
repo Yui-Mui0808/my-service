@@ -20,14 +20,17 @@ const NewInvoice: React.FC = () => {
     throw new Error('InvoiceContextが提供されていません');
   }
 
-  const { invoices, addInvoice } = context;  // invoices を取得
+  const { invoices, addInvoice, updateInvoiceStatus } = context;  // `updateInvoiceStatus` を追加
   const navigate = useNavigate();  // ← ここに追加
 
   // モーダル表示状態管理
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const [showSaveModal, setShowSaveModal] = useState(false);  // 保存確認用モーダルの状態管理
-  const [isSaved, setIsSaved] = useState(false);              // 保存完了メッセージの表示用
-  const [showAlert, setShowAlert] = useState(false);          // キャンセル通知表示管理
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showIssueModal, setShowIssueModal] = useState(false);  // 請求書発行モーダルの状態管理
+  const [isSaved, setIsSaved] = useState(false);
+  const [isIssued, setIsIssued] = useState(false);  // 請求書発行完了メッセージ用
+  const [canIssueInvoice, setCanIssueInvoice] = useState(false);  // 請求書発行ボタンの有効/無効管理
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleCancel = () => {
     setShowCancelModal(false);
@@ -45,15 +48,35 @@ const NewInvoice: React.FC = () => {
   const handleSaveClick = () => {
     setShowSaveModal(true);  // 保存確認用モーダルを表示
   };
-
+  
   const handleConfirmSave = () => {
-    handleSave();            // 保存処理を実行
-    setShowSaveModal(false);  // 保存モーダルを閉じる
-    setIsSaved(true);         // 保存完了メッセージを表示
+    handleSave();
+    setShowSaveModal(false);
+    setIsSaved(true);  // 保存完了メッセージを表示
+
+    // 5秒後に保存メッセージを非表示にする
+    setTimeout(() => {
+      setIsSaved(false);
+    }, 5000);  // 5秒後にメッセージを消す
   };
 
   const handleCancelSave = () => {
-    setShowSaveModal(false);  // モーダルを閉じる
+    setShowSaveModal(false);
+  };
+
+  // 請求書発行処理
+  const handleIssueClick = () => {
+    setShowIssueModal(true);
+  };
+
+  const handleConfirmIssue = () => {
+    setIsIssued(true);  // 発行完了メッセージ表示
+    updateInvoiceStatus(invoiceNumber, true);  // 発行ステータスを更新
+    setShowIssueModal(false);
+  };
+
+  const handleCancelIssue = () => {
+    setShowIssueModal(false);
   };
 
   // 最新の請求書番号を基に次の請求書番号を生成する関数
@@ -132,9 +155,9 @@ const total = subtotal + tax;
       }
     };
 
-    // addInvoice を呼び出して請求書を追加
     addInvoice(newInvoice);
-    navigate('/'); // リストページに戻る
+    setIsSaved(true);         // 保存メッセージを表示
+    setCanIssueInvoice(true); // 請求書発行ボタンを有効化
   };
 
   return (
@@ -142,6 +165,8 @@ const total = subtotal + tax;
       <h1>請求書の新規作成</h1>
 
       {showAlert && <div className="alert-message">キャンセルしました</div>} {/* キャンセル通知 */}
+      {isSaved && <p style={{ color: 'green' }}>請求書を保存しました。</p>}
+      {isIssued && <p style={{ color: 'green' }}>請求書を発行しました。</p>}  {/* 請求書発行メッセージ */}
 
       <div className="top-container">
         <div className="left-container">
@@ -259,6 +284,9 @@ const total = subtotal + tax;
         <button className="back-btn" onClick={() => navigate(-1)}>戻る</button>
         <button className="cancel-btn" onClick={() => setShowCancelModal(true)}>キャンセル</button> {/* モーダル表示 */}
         <button className="save-btn" onClick={handleSaveClick}>保存する</button>
+        <button className="issue-btn" disabled={!canIssueInvoice} onClick={handleIssueClick}>
+          請求書発行
+        </button>
       </div>
             
       {/* キャンセル確認モーダル */}
@@ -281,6 +309,19 @@ const total = subtotal + tax;
             <div className="modal-buttons">
               <button className="confirm-btn" onClick={handleConfirmSave}>はい</button>
               <button className="cancel-btn" onClick={handleCancelSave}>いいえ</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 発行確認モーダル */}
+      {showIssueModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p>請求書を発行しますか？</p>
+            <div className="modal-buttons">
+              <button className="confirm-btn" onClick={handleConfirmIssue}>はい</button>
+              <button className="cancel-btn" onClick={handleCancelIssue}>いいえ</button>
             </div>
           </div>
         </div>
