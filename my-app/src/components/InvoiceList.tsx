@@ -190,13 +190,13 @@ function InvoiceList() {
             <th>支払期限</th>
             <th>合計金額</th>
             <th>ステータス</th> {/* ステータスを追加 */}
-            <th>操作</th> {/* 操作列 */}
+            <th>操作</th>{/* 操作列 */}
           </tr>
         </thead>
         <tbody>
           {filteredInvoices.map((invoice) => (
             <tr key={invoice.invoiceNumber}>
-              <td><input type="checkbox" /></td>
+              <td><input type="checkbox"/></td>
               <td>{invoice.invoiceNumber}</td>
               <td>{invoice.companyName}</td>
               <td>{invoice.invoiceDate}</td>
@@ -204,13 +204,13 @@ function InvoiceList() {
               <td>{invoice.totalAmount.toLocaleString()}円</td>
               <td>{invoice.isIssued ? '発行済み' : '未発行'}</td> {/* 発行済みステータス */}
               <td>
-              <div className="button-group">
-                <div className="top-row">
-                  <button className="edit-btn" onClick={() => handleEditClick(invoice.invoiceNumber)}>編集</button>
-                  <button className="delete-btn" onClick={() => handleDeleteClick(invoice)}>削除</button>
-                </div>
-                  <button className="details-btn" onClick={() => handleDetailsClick(invoice.invoiceNumber)}>詳細</button>
-                </div>
+               <div className="button-group">
+                 <div className="top-row">
+                   <button className="edit-btn"onClick={() => handleEditClick(invoice.invoiceNumber)}>編集</button>
+                   <button className="delete-btn"onClick={() => handleDeleteClick(invoice)}>削除</button>
+                 </div>
+                 <button className="details-btn"onClick={() => handleDetailsClick(invoice.invoiceNumber)}>詳細</button>
+               </div>
               </td>
             </tr>
           ))}

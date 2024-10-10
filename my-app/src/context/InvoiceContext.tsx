@@ -4,7 +4,7 @@ import { Invoice } from '../models/InvoiceModel'; // InvoiceModel からイン�
 
 // コンテキストの型定義
 type InvoiceContextType = {
-  invoices: Invoice[];
+  invoices: Invoice[];  // Invoice[] 型
   addInvoice: (newInvoice: Invoice) => void;
   updateInvoice: (id: string, updatedInvoice: Invoice) => void;
   deleteInvoice: (id: string) => void;
@@ -17,6 +17,9 @@ export const InvoiceContext = createContext<InvoiceContextType | undefined>(unde
 // InvoiceProviderコンポーネントの作成
 export const InvoiceProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [invoiceData, setInvoiceData] = useState<Invoice[]>(initialInvoices);
+
+  // この後に console.log を入れて、invoiceData の中身を確認します。
+console.log("現在の invoiceData の中身: ", invoiceData);  // ← これを追加！
 
   useEffect(() => {
     const savedInvoices = localStorage.getItem('invoices');
@@ -48,11 +51,19 @@ export const InvoiceProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   // 請求書のステータスを更新する関数
   const updateInvoiceStatus = (id: string, isIssued: boolean) => {
-    const updatedInvoices = invoiceData.map((invoice) =>
+    // id と isIssued にどんな値が入っているかを確認する
+    console.log("id: ", id);  // ← idの値を確認する
+    console.log("isIssued: ", isIssued);  // ← isIssuedの値を確認する
+
+    const updatedInvoices = invoiceData.map(invoice =>
       invoice.invoiceNumber === id ? { ...invoice, isIssued } : invoice
     );
+    
+    // 更新後の請求書リストを確認する
+    console.log("更新後の請求書リスト: ", updatedInvoices);  // ← これも追加
+
     setInvoiceData(updatedInvoices);
-    saveToLocalStorage(updatedInvoices);
+    saveToLocalStorage(updatedInvoices); // ローカルストレージに保存
   };
 
   // 請求書を削除する関数

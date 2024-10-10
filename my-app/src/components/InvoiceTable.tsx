@@ -24,7 +24,7 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ items, subtotal, taxTotal, 
                     {items.map((item, index) => (
                         <tr key={index}>
                             <td className="item-name">{item.name}</td>
-                            <td className="item-amount">{item.amount.toLocaleString()}円</td> {/* コンマ追加済み */}
+                            <td className="item-amount">{(item.unitPrice * item.quantity).toLocaleString()}円</td>
                         </tr>
                     ))}
                 </tbody>
